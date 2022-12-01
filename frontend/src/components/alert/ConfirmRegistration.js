@@ -8,22 +8,6 @@ import Paper from '@mui/material/Paper'
 import { Typography } from '@mui/material'
 
 const ConfirmRegisData = ({ inputData }) => {
-  const rows = [
-    { key: 'Nama', value: 'Dzulfikri Alkautsari' },
-    {
-      key: 'NIK',
-      value: '3210032911950021'
-    },
-    {
-      key: 'Email',
-      value: 'dzulfikrialfik@gmail.com'
-    },
-    {
-      key: 'No. Telp',
-      value: '082121884879'
-    }
-  ]
-
   return (
     <TableContainer component={Paper}>
       <Typography align='center' variant='subtitle1' mb={1}>

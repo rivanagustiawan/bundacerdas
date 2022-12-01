@@ -51,6 +51,7 @@ return array(
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src/PhpOption'),
+    'ParseCsv\\' => array($vendorDir . '/parsecsv/php-parsecsv/src'),
     'Opis\\Closure\\' => array($vendorDir . '/opis/closure/src'),
     'NunoMaduro\\Collision\\' => array($vendorDir . '/nunomaduro/collision/src'),
     'Namshi\\JOSE\\' => array($vendorDir . '/namshi/jose/src/Namshi/JOSE'),
@@ -94,6 +95,7 @@ return array(
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
     'Barryvdh\\LaravelIdeHelper\\' => array($vendorDir . '/barryvdh/laravel-ide-helper/src'),
+    'AzisHapidin\\IndoRegion\\' => array($vendorDir . '/azishapidin/indoregion/src'),
     'Asm89\\Stack\\' => array($vendorDir . '/asm89/stack-cors/src'),
     'App\\' => array($baseDir . '/app'),
 );

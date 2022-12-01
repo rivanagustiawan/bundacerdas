@@ -29,6 +29,7 @@ class ComposerStaticInite4ff80517605eca2cbea94654ea616ff
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        '7f6e3de7af83a54fa34e8222e98ec3eb' => __DIR__ . '/..' . '/azishapidin/indoregion/src/RawDataGetter.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
@@ -104,6 +105,7 @@ class ComposerStaticInite4ff80517605eca2cbea94654ea616ff
             'Psr\\Cache\\' => 10,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
+            'ParseCsv\\' => 9,
         ),
         'O' => 
         array (
@@ -183,6 +185,7 @@ class ComposerStaticInite4ff80517605eca2cbea94654ea616ff
         ),
         'A' => 
         array (
+            'AzisHapidin\\IndoRegion\\' => 23,
             'Asm89\\Stack\\' => 12,
             'App\\' => 4,
         ),
@@ -371,6 +374,10 @@ class ComposerStaticInite4ff80517605eca2cbea94654ea616ff
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
         ),
+        'ParseCsv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/parsecsv/php-parsecsv/src',
+        ),
         'Opis\\Closure\\' => 
         array (
             0 => __DIR__ . '/..' . '/opis/closure/src',
@@ -544,6 +551,10 @@ class ComposerStaticInite4ff80517605eca2cbea94654ea616ff
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src',
         ),
+        'AzisHapidin\\IndoRegion\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/azishapidin/indoregion/src',
+        ),
         'Asm89\\Stack\\' => 
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src',
@@ -597,6 +608,14 @@ class ComposerStaticInite4ff80517605eca2cbea94654ea616ff
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'AzisHapidin\\IndoRegion\\IndoRegion' => __DIR__ . '/..' . '/azishapidin/indoregion/src/IndoRegion.php',
+        'AzisHapidin\\IndoRegion\\IndoRegionPublishCommand' => __DIR__ . '/..' . '/azishapidin/indoregion/src/IndoRegionPublishCommand.php',
+        'AzisHapidin\\IndoRegion\\IndoRegionServiceProvider' => __DIR__ . '/..' . '/azishapidin/indoregion/src/IndoRegionServiceProvider.php',
+        'AzisHapidin\\IndoRegion\\RawDataGetter' => __DIR__ . '/..' . '/azishapidin/indoregion/src/RawDataGetter.php',
+        'AzisHapidin\\IndoRegion\\Traits\\DistrictTrait' => __DIR__ . '/..' . '/azishapidin/indoregion/src/Traits/DistrictTrait.php',
+        'AzisHapidin\\IndoRegion\\Traits\\ProvinceTrait' => __DIR__ . '/..' . '/azishapidin/indoregion/src/Traits/ProvinceTrait.php',
+        'AzisHapidin\\IndoRegion\\Traits\\RegencyTrait' => __DIR__ . '/..' . '/azishapidin/indoregion/src/Traits/RegencyTrait.php',
+        'AzisHapidin\\IndoRegion\\Traits\\VillageTrait' => __DIR__ . '/..' . '/azishapidin/indoregion/src/Traits/VillageTrait.php',
         'Barryvdh\\LaravelIdeHelper\\Alias' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Alias.php',
         'Barryvdh\\LaravelIdeHelper\\ClassMapGenerator' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/ClassMapGenerator.php',
         'Barryvdh\\LaravelIdeHelper\\Console\\EloquentCommand' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Console/EloquentCommand.php',
@@ -4269,6 +4288,12 @@ class ComposerStaticInite4ff80517605eca2cbea94654ea616ff
         'PHPUnit\\Util\\Xml\\SuccessfulSchemaDetectionResult' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Xml/SuccessfulSchemaDetectionResult.php',
         'PHPUnit\\Util\\Xml\\ValidationResult' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Xml/ValidationResult.php',
         'PHPUnit\\Util\\Xml\\Validator' => __DIR__ . '/..' . '/phpunit/phpunit/src/Util/Xml/Validator.php',
+        'ParseCsv\\Csv' => __DIR__ . '/..' . '/parsecsv/php-parsecsv/src/Csv.php',
+        'ParseCsv\\enums\\AbstractEnum' => __DIR__ . '/..' . '/parsecsv/php-parsecsv/src/enums/AbstractEnum.php',
+        'ParseCsv\\enums\\DatatypeEnum' => __DIR__ . '/..' . '/parsecsv/php-parsecsv/src/enums/DatatypeEnum.php',
+        'ParseCsv\\enums\\FileProcessingModeEnum' => __DIR__ . '/..' . '/parsecsv/php-parsecsv/src/enums/FileProcessingModeEnum.php',
+        'ParseCsv\\enums\\SortEnum' => __DIR__ . '/..' . '/parsecsv/php-parsecsv/src/enums/SortEnum.php',
+        'ParseCsv\\extensions\\DatatypeTrait' => __DIR__ . '/..' . '/parsecsv/php-parsecsv/src/extensions/DatatypeTrait.php',
         'PharIo\\Manifest\\Application' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Application.php',
         'PharIo\\Manifest\\ApplicationName' => __DIR__ . '/..' . '/phar-io/manifest/src/values/ApplicationName.php',
         'PharIo\\Manifest\\Author' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Author.php',
