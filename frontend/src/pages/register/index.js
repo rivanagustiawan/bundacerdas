@@ -30,6 +30,7 @@ import { LoadingButton } from '@mui/lab'
 import { MySwal, MySwalConfirm } from 'src/helpers/sweetAlert'
 import { useRouter } from 'next/router'
 import ConfirmRegisData from 'src/components/alert/ConfirmRegistration'
+import RegistrationSuccess from 'src/components/alert/RegistrationSuccess'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -72,7 +73,6 @@ const Register = () => {
 
   const [walletName, setWalletName] = useState([])
   const [isChecked, setIsChecked] = useState(false)
-  const [isConfirmed, setIsConfirmed] = useState(false)
 
   // ** Hook
   const auth = useAuth()
@@ -169,11 +169,12 @@ const Register = () => {
 
           MySwal(
             'Registrasi Berhasil',
-            'Kami telah mengirimkan password anda ke email. Silahkan cek email anda',
+            <RegistrationSuccess email='dzulfikrialfik@gmail.com' />,
             'success',
             true,
             false,
             () => {
+              window.open('https://saweria.co/fikrialfik', '_blank')
               router.replace('/login')
             }
           )

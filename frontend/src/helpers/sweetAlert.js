@@ -26,8 +26,8 @@ export async function MySwal(
     swalInstance.timer = timeToClose
   }
 
-  return TheSwal.fire(swalInstance).then(() => {
-    if (callback) {
+  return TheSwal.fire(swalInstance).then(result => {
+    if (result.isConfirmed && callback) {
       callback()
     }
   })
