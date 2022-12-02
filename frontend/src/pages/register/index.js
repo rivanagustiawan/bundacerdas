@@ -139,17 +139,20 @@ const Register = () => {
     }))
 
     if (name === 'provinsi' && name !== '') {
+      setRegencies([])
       getRegencies(value)
       setDistricts([])
       setVillages([])
     }
 
     if (name === 'kota' && name !== '') {
+      setDistricts([])
       getDistricts(value)
       setVillages([])
     }
 
     if (name == 'kecamatan' && name !== '') {
+      setVillages([])
       getVillages(value)
     }
 
