@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment, forwardRef } from 'react'
+import { useState, Fragment, forwardRef, useEffect } from 'react'
 
 // ** Next Import
 import Link from 'next/link'
@@ -31,6 +31,7 @@ import { MySwal, MySwalConfirm } from 'src/helpers/sweetAlert'
 import { useRouter } from 'next/router'
 import ConfirmRegisData from 'src/components/alert/ConfirmRegistration'
 import RegistrationSuccess from 'src/components/alert/RegistrationSuccess'
+import axios from 'axios'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -70,13 +71,20 @@ const Register = () => {
   }
 
   const [input, setInput] = useState(defaultInputs)
-
   const [walletName, setWalletName] = useState([])
   const [isChecked, setIsChecked] = useState(false)
+  const [provinces, setProvinces] = useState([])
+  const [regencies, setRegencies] = useState([])
+  const [districts, setDistricts] = useState([])
+  const [villages, setVillages] = useState([])
 
   // ** Hook
   const auth = useAuth()
   const router = useRouter()
+
+  useEffect(() => {
+    getProvinces()
+  }, [])
 
   // ** Definitions
   const CustomInput = forwardRef(({ ...props }, ref) => {
@@ -130,7 +138,66 @@ const Register = () => {
       [name]: value
     }))
 
+    if (name === 'provinsi' && name !== '') {
+      getRegencies(value)
+      setDistricts([])
+      setVillages([])
+    }
+
+    if (name === 'kota' && name !== '') {
+      getDistricts(value)
+      setVillages([])
+    }
+
+    if (name == 'kecamatan' && name !== '') {
+      getVillages(value)
+    }
+
     clearErrors(name)
+  }
+
+  const getProvinces = async () => {
+    await axios
+      .get('http://127.0.0.1:8000/api/get/provinces')
+      .then(async response => {
+        setProvinces(response.data.data.provinces)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  const getRegencies = async provinceId => {
+    await axios
+      .get(`http://127.0.0.1:8000/api/get/regencies/${provinceId}`)
+      .then(async response => {
+        setRegencies(response.data.data.regencies)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  const getDistricts = async regencyId => {
+    await axios
+      .get(`http://127.0.0.1:8000/api/get/districts/${regencyId}`)
+      .then(async response => {
+        setDistricts(response.data.data.districts)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  const getVillages = async districtId => {
+    await axios
+      .get(`http://127.0.0.1:8000/api/get/villages/${districtId}`)
+      .then(async response => {
+        setVillages(response.data.data.villages)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   const onSubmitRegister = e => {
@@ -479,9 +546,12 @@ const Register = () => {
                       <MenuItem value=''>
                         <em>Pilih Provinsi</em>
                       </MenuItem>
-                      <MenuItem value={32}>Jawa Barat</MenuItem>
-                      <MenuItem value={33}>Jawa Tengah</MenuItem>
-                      <MenuItem value={34}>Jawa Timur</MenuItem>
+                      {provinces &&
+                        provinces.map(province => (
+                          <MenuItem value={province.id} key={province.id}>
+                            {province.name}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </FormControl>
                   {errors.provinsi && (
@@ -499,6 +569,7 @@ const Register = () => {
                       id='demo-simple-select-outlined'
                       labelId='demo-simple-select-outlined-label'
                       name='kota'
+                      disabled={regencies.length === 0 ? true : false}
                       value={input.kota}
                       onChange={onChangeInput}
                       error={Boolean(errors.kota)}
@@ -506,9 +577,12 @@ const Register = () => {
                       <MenuItem value=''>
                         <em>Pilih Kabupaten / Kota</em>
                       </MenuItem>
-                      <MenuItem value={3210}>Majalengka</MenuItem>
-                      <MenuItem value={3217}>Bandung</MenuItem>
-                      <MenuItem value={3216}>Tasikmalaya</MenuItem>
+                      {regencies &&
+                        regencies.map(regency => (
+                          <MenuItem value={regency.id} key={regency.id}>
+                            {regency.name}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </FormControl>
                   {errors.kota && (
@@ -531,6 +605,7 @@ const Register = () => {
                       name='kecamatan'
                       id='demo-simple-select-outlined'
                       labelId='demo-simple-select-outlined-label'
+                      disabled={districts.length === 0 ? true : false}
                       value={input.kecamatan}
                       onChange={onChangeInput}
                       error={Boolean(errors.kecamatan)}
@@ -538,9 +613,12 @@ const Register = () => {
                       <MenuItem value=''>
                         <em>Pilih Kecamatan</em>
                       </MenuItem>
-                      <MenuItem value={3210030}>Cikijng</MenuItem>
-                      <MenuItem value={3210031}>Talaga</MenuItem>
-                      <MenuItem value={3210040}>Majalengka Kulon</MenuItem>
+                      {districts &&
+                        districts.map(district => (
+                          <MenuItem value={district.id} key={district.id}>
+                            {district.name}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </FormControl>
                   {errors.kecamatan && (
@@ -558,6 +636,7 @@ const Register = () => {
                       name='kelurahan'
                       id='demo-simple-select-outlined'
                       labelId='demo-simple-select-outlined-label'
+                      disabled={villages.length === 0 ? true : false}
                       value={input.kelurahan}
                       onChange={onChangeInput}
                       error={Boolean(errors.kelurahan)}
@@ -565,9 +644,12 @@ const Register = () => {
                       <MenuItem value=''>
                         <em>Pilih Kelurahan</em>
                       </MenuItem>
-                      <MenuItem value={3210030016}>Cikijing</MenuItem>
-                      <MenuItem value={3210030017}>Kasturi</MenuItem>
-                      <MenuItem value={3210030018}>Cidulang</MenuItem>
+                      {villages &&
+                        villages.map(village => (
+                          <MenuItem value={village.id} key={village.id}>
+                            {village.name}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </FormControl>
                   {errors.kelurahan && (
