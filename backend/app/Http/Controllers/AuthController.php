@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Helper;
 use App\Http\Resources\UserResource;
 use App\Mail\RegistrationMail;
+use App\Models\District;
+use App\Models\Province;
+use App\Models\Regency;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +18,16 @@ class AuthController extends Controller
 {
   public function __construct()
   {
-    $this->middleware("auth:api", ["except" => ["login", "register"]]);
+    $exceptMiddleware = [
+      "login",
+      "register",
+      "getProvinces",
+      "getRegencies",
+      "getDistricts",
+      "getVillages",
+    ];
+
+    $this->middleware("auth:api", ["except" => $exceptMiddleware]);
   }
 
   public function login(Request $request)
@@ -162,5 +174,49 @@ class AuthController extends Controller
   protected function guard()
   {
     return Auth::guard();
+  }
+
+  public function getProvinces()
+  {
+    return response()->json([
+      "status" => 200,
+      "error"  => false,
+      "data"   => [
+        "provinces" => Province::all()
+      ]
+    ]);
+  }
+
+  public function getRegencies(Province $province)
+  {
+    return response()->json([
+      "status" => 200,
+      "error"  => false,
+      "data"   => [
+        "regencies" => $province->regencies
+      ]
+    ]);
+  }
+
+  public function getDistricts(Regency $regency)
+  {
+    return response()->json([
+      "status" => 200,
+      "error"  => false,
+      "data"   => [
+        "districts" => $regency->districts
+      ]
+    ]);
+  }
+
+  public function getVillages(District $district)
+  {
+    return response()->json([
+      "status" => 200,
+      "error"  => false,
+      "data"   => [
+        "villages" => $district->villages
+      ]
+    ]);
   }
 }
