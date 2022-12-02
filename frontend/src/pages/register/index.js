@@ -269,7 +269,11 @@ const Register = () => {
         <Card sx={{ zIndex: 1 }}>
           <CardContent sx={{ p: theme => `${theme.spacing(15.5, 7, 6.5)} !important` }}>
             <Box sx={{ mt: -5, mb: 5, display: 'flex', justifyContent: 'center' }}>
-              <img src='/images/logo-wanita-islam.png' alt='Logo Wanita Islam' width={100} />
+              <img
+                src='/images/logo-wanita-islam.png'
+                alt='Logo Wanita Islam'
+                width={100}
+              />
             </Box>
             <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Typography
@@ -998,7 +1002,11 @@ const Register = () => {
               {/* Redirect To Login */}
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ mr: 2, color: 'text.secondary' }}>Sudah punya akun?</Typography>
-                <Typography component={Link} href='/login' sx={{ color: 'primary.main', textDecoration: 'none' }}>
+                <Typography
+                  component={Link}
+                  href='/login'
+                  sx={{ color: 'primary.main', textDecoration: 'none' }}
+                >
                   Login
                 </Typography>
               </Box>

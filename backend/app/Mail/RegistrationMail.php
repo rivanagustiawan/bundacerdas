@@ -10,6 +10,10 @@ use Illuminate\Queue\SerializesModels;
 class RegistrationMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $name;
+    public $email;
+    public $nik;
+    public $nomorAnggota;
     public $password;
 
     /**
@@ -17,9 +21,13 @@ class RegistrationMail extends Mailable
      *
      * @return void
      */
-    public function __construct($password)
+    public function __construct($name, $email, $nik, $nomorAnggota, $password)
     {
-        $this->password = $password;
+        $this->name         = $name;
+        $this->email        = $email;
+        $this->nik          = $nik;
+        $this->nomorAnggota = $nomorAnggota;
+        $this->password     = $password;
     }
 
     /**

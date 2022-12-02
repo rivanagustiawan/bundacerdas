@@ -209,7 +209,11 @@ const LoginPage = () => {
                 justifyContent: 'center'
               }}
             >
-              <img src='/images/logo-wanita-islam.png' alt='Logo Wanita Islam' width={50} />
+              <img
+                src='/images/logo-wanita-islam.png'
+                alt='Logo Wanita Islam'
+                width={50}
+              />
               <Typography variant='h6' sx={{ ml: 2, lineHeight: 1, fontWeight: 700, fontSize: '1.5rem !important' }}>
                 {themeConfig.templateName}
               </Typography>
@@ -309,21 +313,17 @@ const LoginPage = () => {
                   label='Ingat saya'
                   control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
                 />
-                {/* <Typography
-                  variant='body2'
-                  component={Link}
-                  href='/forgot-password'
-                  sx={{ color: 'primary.main', textDecoration: 'none' }}
-                >
-                  Lupa password??
-                </Typography> */}
               </Box>
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
                 Masuk
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ mr: 2, color: 'text.secondary' }}>Belum punya akun?</Typography>
-                <Typography href='/register' component={Link} sx={{ color: 'primary.main', textDecoration: 'none' }}>
+                <Typography
+                  href='/register'
+                  component={Link}
+                  sx={{ color: 'primary.main', textDecoration: 'none' }}
+                >
                   Daftar
                 </Typography>
               </Box>

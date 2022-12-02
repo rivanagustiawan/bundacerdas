@@ -105,7 +105,13 @@ class AuthController extends Controller
     $generatedPassword = Helper::generateRandomString(15);
 
     try {
-      Mail::to($request->email)->send(new RegistrationMail($generatedPassword));
+      Mail::to($request->email)->send(new RegistrationMail(
+        $request->name,
+        $request->email,
+        $request->nik,
+        $generatedNomorAnggota,
+        $generatedPassword
+      ));
 
       $user = User::create(array_merge(
         $validator->validated(),

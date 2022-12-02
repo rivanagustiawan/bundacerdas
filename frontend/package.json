@@ -1,11 +1,12 @@
 {
   "name": "materialize-mui-react-nextjs-admin-template",
+  "homepage": "https://rumahwebsiteku.com/react-test/",
   "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "export": "next export",
     "lint": "eslint --fix \"src/**/*.{js,jsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
