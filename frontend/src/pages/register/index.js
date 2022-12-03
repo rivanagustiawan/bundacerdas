@@ -141,6 +141,11 @@ const Register = () => {
     if (name === 'provinsi' && name !== '') {
       setRegencies([])
       getRegencies(value)
+      setInput(prevInput => {
+        return {
+          ...prevInput, kota: '', kecamatan: '', kelurahan: ''
+        }
+      })
       setDistricts([])
       setVillages([])
     }
@@ -148,12 +153,22 @@ const Register = () => {
     if (name === 'kota' && name !== '') {
       setDistricts([])
       getDistricts(value)
+      setInput(prevInput => {
+        return {
+          ...prevInput, kecamatan: '', kelurahan: ''
+        }
+      })
       setVillages([])
     }
 
     if (name == 'kecamatan' && name !== '') {
       setVillages([])
       getVillages(value)
+      setInput(prevInput => {
+        return {
+          ...prevInput, kelurahan: ''
+        }
+      })
     }
 
     clearErrors(name)
