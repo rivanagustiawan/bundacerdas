@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Province;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -136,5 +137,22 @@ class User extends Authenticatable implements JWTSubject
   public function getJWTCustomClaims()
   {
     return [];
+  }
+
+  public function provinsi()
+  {
+      return $this->hasOne(Province::class, 'id', 'provinsi');
+  }
+  public function kota()
+  {
+      return $this->hasOne(Regency::class, 'id', 'kota');
+  }
+  public function kecamatan()
+  {
+      return $this->hasOne(District::class, 'id', 'kecamatan');
+  }
+  public function kelurahan()
+  {
+      return $this->hasOne(Village::class, 'id', 'kelurahan');
   }
 }

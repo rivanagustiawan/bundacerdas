@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'ac58d5bef3f4e2e55bb523d52b82adfb1333512c',
+        'reference' => 'dc5e5f929d50ae8bc1f2e386e5c168b2ce0defb8',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -17,6 +17,15 @@
             'install_path' => __DIR__ . '/../asm89/stack-cors',
             'aliases' => array(),
             'reference' => '73e5b88775c64ccc0b84fb60836b30dc9d92ac4a',
+            'dev_requirement' => false,
+        ),
+        'azishapidin/indoregion' => array(
+            'pretty_version' => '3.0.3',
+            'version' => '3.0.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../azishapidin/indoregion',
+            'aliases' => array(),
+            'reference' => '95874c8b89ae8216fad11ec0f8e81de544331ded',
             'dev_requirement' => false,
         ),
         'barryvdh/laravel-ide-helper' => array(
@@ -442,6 +451,15 @@
                 0 => 'v8.83.26',
             ),
         ),
+        'itsgoingd/clockwork' => array(
+            'pretty_version' => 'v5.1.11',
+            'version' => '5.1.11.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../itsgoingd/clockwork',
+            'aliases' => array(),
+            'reference' => 'a790200347f0c6d07e2fca252ccb446df87520c6',
+            'dev_requirement' => false,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -463,7 +481,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'ac58d5bef3f4e2e55bb523d52b82adfb1333512c',
+            'reference' => 'dc5e5f929d50ae8bc1f2e386e5c168b2ce0defb8',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -641,6 +659,15 @@
             'install_path' => __DIR__ . '/../opis/closure',
             'aliases' => array(),
             'reference' => '3d81e4309d2a927abbe66df935f4bb60082805ad',
+            'dev_requirement' => false,
+        ),
+        'parsecsv/php-parsecsv' => array(
+            'pretty_version' => '1.3.2',
+            'version' => '1.3.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../parsecsv/php-parsecsv',
+            'aliases' => array(),
+            'reference' => '2d6236cae09133e0533d34ed45ba1e1ecafffebb',
             'dev_requirement' => false,
         ),
         'phar-io/manifest' => array(
