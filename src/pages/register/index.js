@@ -143,7 +143,10 @@ const Register = () => {
       getRegencies(value)
       setInput(prevInput => {
         return {
-          ...prevInput, kota: '', kecamatan: '', kelurahan: ''
+          ...prevInput,
+          kota: '',
+          kecamatan: '',
+          kelurahan: ''
         }
       })
       setDistricts([])
@@ -155,7 +158,9 @@ const Register = () => {
       getDistricts(value)
       setInput(prevInput => {
         return {
-          ...prevInput, kecamatan: '', kelurahan: ''
+          ...prevInput,
+          kecamatan: '',
+          kelurahan: ''
         }
       })
       setVillages([])
@@ -166,7 +171,8 @@ const Register = () => {
       getVillages(value)
       setInput(prevInput => {
         return {
-          ...prevInput, kelurahan: ''
+          ...prevInput,
+          kelurahan: ''
         }
       })
     }
@@ -176,7 +182,7 @@ const Register = () => {
 
   const getProvinces = async () => {
     await axios
-      .get('http://127.0.0.1:8000/api/get/provinces')
+      .get('https://api-wi.schverse.my.id/api/get/provinces')
       .then(async response => {
         setProvinces(response.data.data.provinces)
       })
@@ -187,7 +193,7 @@ const Register = () => {
 
   const getRegencies = async provinceId => {
     await axios
-      .get(`http://127.0.0.1:8000/api/get/regencies/${provinceId}`)
+      .get(`https://api-wi.schverse.my.id/api/get/regencies/${provinceId}`)
       .then(async response => {
         setRegencies(response.data.data.regencies)
       })
@@ -198,7 +204,7 @@ const Register = () => {
 
   const getDistricts = async regencyId => {
     await axios
-      .get(`http://127.0.0.1:8000/api/get/districts/${regencyId}`)
+      .get(`https://api-wi.schverse.my.id/api/get/districts/${regencyId}`)
       .then(async response => {
         setDistricts(response.data.data.districts)
       })
@@ -209,7 +215,7 @@ const Register = () => {
 
   const getVillages = async districtId => {
     await axios
-      .get(`http://127.0.0.1:8000/api/get/villages/${districtId}`)
+      .get(`https://api-wi.schverse.my.id/api/get/villages/${districtId}`)
       .then(async response => {
         setVillages(response.data.data.villages)
       })
@@ -284,11 +290,7 @@ const Register = () => {
         <Card sx={{ zIndex: 1 }}>
           <CardContent sx={{ p: theme => `${theme.spacing(15.5, 7, 6.5)} !important` }}>
             <Box sx={{ mt: -5, mb: 5, display: 'flex', justifyContent: 'center' }}>
-              <img
-                src='/images/logo-wanita-islam.png'
-                alt='Logo Wanita Islam'
-                width={100}
-              />
+              <img src='/images/logo-wanita-islam.png' alt='Logo Wanita Islam' width={100} />
             </Box>
             <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Typography
@@ -1017,11 +1019,7 @@ const Register = () => {
               {/* Redirect To Login */}
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ mr: 2, color: 'text.secondary' }}>Sudah punya akun?</Typography>
-                <Typography
-                  component={Link}
-                  href='/login'
-                  sx={{ color: 'primary.main', textDecoration: 'none' }}
-                >
+                <Typography component={Link} href='/login' sx={{ color: 'primary.main', textDecoration: 'none' }}>
                   Login
                 </Typography>
               </Box>

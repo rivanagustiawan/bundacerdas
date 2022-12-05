@@ -19,9 +19,11 @@ import CardHeader from '@mui/material/CardHeader'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import CardContent from '@mui/material/CardContent'
+import TuneIcon from '@mui/icons-material/Tune'
 import Select from '@mui/material/Select'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import moment from 'moment'
 
 import authConfig from 'src/configs/auth'
@@ -91,7 +93,7 @@ const RowOptions = ({ id }) => {
           <Icon icon='mdi:eye-outline' fontSize={20} />
           View
         </MenuItem>
-        <MenuItem onClick={handleRowOptionsClose} sx={{ '& svg': { mr: 2 } }}>
+        <MenuItem onClick={handleRowOptionsClose} sx={{ '& svg': { mr: 2 } }} href={`/user/edit/${id}`}>
           <Icon icon='mdi:pencil-outline' fontSize={20} />
           Edit
         </MenuItem>
@@ -204,7 +206,7 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <Typography variant='subtitle2' noWrap sx={{ textTransform: 'capitalize' }}>
-          {row.provinsi}
+          {row.provinsi.name}
         </Typography>
       )
     }
@@ -217,7 +219,7 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <Typography variant='subtitle2' noWrap sx={{ textTransform: 'capitalize' }}>
-          {row.kota}
+          {row.kota.name}
         </Typography>
       )
     }
@@ -230,7 +232,7 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <Typography variant='subtitle2' noWrap sx={{ textTransform: 'capitalize' }}>
-          {row.kecamatan}
+          {row.kecamatan.name}
         </Typography>
       )
     }
@@ -243,7 +245,7 @@ const columns = [
     renderCell: ({ row }) => {
       return (
         <Typography variant='subtitle2' noWrap sx={{ textTransform: 'capitalize' }}>
-          {row.kelurahan}
+          {row.kelurahan.name}
         </Typography>
       )
     }
@@ -259,36 +261,62 @@ const columns = [
 ]
 
 export default function Index() {
-  const [pageSize, setPageSize] = useState(10)
-  const [tableData, setTableData] = useState([])
-  const [pengurus, setPengurus] = useState('')
-  const [filter, setFilter] = useState('')
-  const [filterBy, setFilterBy] = useState('all')
-  const [provinsi, setProvinsi] = useState('')
-  const [kota, setKota] = useState('')
-  const [kecamatan, setKecamatan] = useState('')
-  const [kelurahan, setKelurahan] = useState('')
-  const [dari, setDari] = useState(dayjs(moment().format()))
   const [sampai, setSampai] = useState(dayjs(moment().format()))
-  const [filterDari, setFilterDari] = useState('')
+  const [dari, setDari] = useState(dayjs(moment().format()))
+  const [arrayKecamatan, setArrayKecamatan] = useState([])
+  const [arrayKelurahan, setArrayKelurahan] = useState([])
+  const [arrayProvinsi, setArrayProvinsi] = useState([])
   const [filterSampai, setFilterSampai] = useState('')
+  const [filterDari, setFilterDari] = useState('')
+  const [filterBy, setFilterBy] = useState('all')
+  const [kelurahan, setKelurahan] = useState('')
+  const [tableData, setTableData] = useState([])
+  const [kecamatan, setKecamatan] = useState('')
+  const [arrayKota, setArrayKota] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [pengurus, setPengurus] = useState('')
+  const [provinsi, setProvinsi] = useState('')
+  const [filter, setFilter] = useState('')
+  const [kota, setKota] = useState('')
 
   async function fetchData() {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     try {
-      const response = await axios({
-        method: 'get',
-        url: `${configs.API_URL}/users?jenis_pengurus=${pengurus}&${filterBy}=${filter}&provinsi=${provinsi}&kota=${kota}&kecamatan=${kecamatan}&kelurahan=${kelurahan}&dari=${filterDari}&sampai=${filterSampai}`,
+      const response = await axios.get(`${configs.API_URL}/users?${filterBy}=${filter}`, {
+        params: {
+          jenis_pengurus: `${pengurus}`,
+          provinsi: `${provinsi}`,
+          kota: `${kota}`,
+          kecamatan: `${kecamatan}`,
+          kelurahan: `${kelurahan}`,
+          dari: `${filterDari}`,
+          sampai: `${filterSampai}`
+        },
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${storedToken}`
         }
       })
       setTableData(response.data.user)
-      console.log(response)
     } catch (error) {
       console.log(error)
     }
+  }
+  async function getProvinces() {
+    const response = await axios.get(`${configs.API_URL}/get/provinces`)
+    setArrayProvinsi(response.data.data.provinces)
+  }
+  async function getRegency(id) {
+    const response = await axios.get(`${configs.API_URL}/get/regencies/${id}`)
+    setArrayKota(response.data.data.regencies)
+  }
+  async function getDistricts(id) {
+    const response = await axios.get(`${configs.API_URL}/get/districts/${id}`)
+    setArrayKecamatan(response.data.data.districts)
+  }
+  async function getVillages(id) {
+    const response = await axios.get(`${configs.API_URL}/get/villages/${id}`)
+    setArrayKelurahan(response.data.data.villages)
   }
 
   const handleFilter = () => {
@@ -298,13 +326,15 @@ export default function Index() {
   const handleResetFilter = () => {
     setPengurus('')
     setFilter('')
-    setFilterBy('')
+    setFilterBy('all')
     setProvinsi('')
     setKota('')
     setKecamatan('')
     setKelurahan('')
     setFilterDari('')
     setFilterSampai('')
+    setDari(dayjs(moment().format()))
+    setSampai(dayjs(moment().format()))
     fetchData()
   }
 
@@ -319,11 +349,15 @@ export default function Index() {
   }
   useEffect(() => {
     fetchData()
-  }, [])
+    getProvinces()
+  }, [pengurus, provinsi, kota, kecamatan, filterDari, filterSampai, filterBy, filter])
 
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
+        <Typography variant='h4' sx={{ mb: 4 }}>
+          Register All
+        </Typography>
         <Card>
           <CardHeader />
           <CardContent>
@@ -389,15 +423,18 @@ export default function Index() {
                     value={provinsi}
                     label='Select filter'
                     labelId='filter-select'
-                    onChange={e => setProvinsi(e.target.value)}
+                    onChange={e => [setProvinsi(e.target.value), getRegency(e.target.value)]}
                     inputProps={{ placeholder: 'Select Provinsi' }}
                   >
                     <MenuItem value=''>
                       <em>Pilih Provinsi</em>
                     </MenuItem>
-                    <MenuItem value={32}>Jawa Barat</MenuItem>
-                    <MenuItem value={33}>Jawa Tengah</MenuItem>
-                    <MenuItem value={34}>Jawa Timur</MenuItem>
+                    {arrayProvinsi &&
+                      arrayProvinsi.map(provinsi => (
+                        <MenuItem value={provinsi.id} key={provinsi.id}>
+                          {provinsi.name}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -410,15 +447,18 @@ export default function Index() {
                     disabled={provinsi ? '' : 'false'}
                     label='Select filter'
                     labelId='filter-select'
-                    onChange={e => setKota(e.target.value)}
-                    inputProps={{ placeholder: 'Select Provinsi' }}
+                    onChange={e => [setKota(e.target.value), getDistricts(e.target.value)]}
+                    inputProps={{ placeholder: 'Select Kota' }}
                   >
                     <MenuItem value=''>
                       <em>Pilih Kabupaten / Kota</em>
                     </MenuItem>
-                    <MenuItem value={3210}>Majalengka</MenuItem>
-                    <MenuItem value={3217}>Bandung</MenuItem>
-                    <MenuItem value={3216}>Tasikmalaya</MenuItem>
+                    {arrayKota &&
+                      arrayKota.map(kota => (
+                        <MenuItem value={kota.id} key={kota.id}>
+                          {kota.name}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -431,15 +471,18 @@ export default function Index() {
                     disabled={kota ? '' : 'false'}
                     label='Select filter'
                     labelId='filter-select'
-                    onChange={e => setKecamatan(e.target.value)}
-                    inputProps={{ placeholder: 'Select Provinsi' }}
+                    onChange={e => [setKecamatan(e.target.value), getVillages(e.target.value)]}
+                    inputProps={{ placeholder: 'Select Kecamatan' }}
                   >
                     <MenuItem value=''>
                       <em>Pilih Kecamatan</em>
                     </MenuItem>
-                    <MenuItem value={3210030}>Cikijng</MenuItem>
-                    <MenuItem value={3210031}>Talaga</MenuItem>
-                    <MenuItem value={3210040}>Majalengka Kulon</MenuItem>
+                    {arrayKecamatan &&
+                      arrayKecamatan.map(kecamatan => (
+                        <MenuItem value={kecamatan.id} key={kecamatan.id}>
+                          {kecamatan.name}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -453,14 +496,17 @@ export default function Index() {
                     label='Select filter'
                     labelId='filter-select'
                     onChange={e => setKelurahan(e.target.value)}
-                    inputProps={{ placeholder: 'Select Provinsi' }}
+                    inputProps={{ placeholder: 'Select Kelurahan' }}
                   >
                     <MenuItem value=''>
                       <em>Pilih Kelurahan</em>
                     </MenuItem>
-                    <MenuItem value={3210030016}>Cikijing</MenuItem>
-                    <MenuItem value={3210030017}>Kasturi</MenuItem>
-                    <MenuItem value={3210030018}>Cidulang</MenuItem>
+                    {arrayKelurahan &&
+                      arrayKelurahan.map(kelurahan => (
+                        <MenuItem value={kelurahan.id} key={kelurahan.id}>
+                          {kelurahan.name}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -488,10 +534,16 @@ export default function Index() {
               </Grid>
               <Grid item sm={4} xs={12}>
                 <Button sx={{ mb: 2, mt: 3, mr: 2 }} size='large' variant='contained' onClick={handleFilter}>
-                  Filter
+                  <TuneIcon />
                 </Button>
-                <Button sx={{ mb: 2, mt: 3 }} size='large' variant='contained' onClick={handleResetFilter}>
-                  Reset
+                <Button
+                  sx={{ mb: 2, mt: 3 }}
+                  color='error'
+                  size='large'
+                  variant='contained'
+                  onClick={handleResetFilter}
+                >
+                  <RestartAltIcon />
                 </Button>
               </Grid>
             </Grid>

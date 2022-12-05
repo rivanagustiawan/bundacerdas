@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
         // console.log('Stored token : ', storedToken)
         setLoading(true)
         await axios
-          .get('http://127.0.0.1:8000/api/auth/profile', {
+          .get('https://api-wi.schverse.my.id/api/auth/profile', {
             headers: {
               Authorization: `Bearer ${storedToken}`
             }

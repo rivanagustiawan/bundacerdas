@@ -180,6 +180,7 @@ const LoginPage = () => {
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
           <LoginIllustrationWrapper>
             <LoginIllustration
+              style={{ borderRadius: '30px' }}
               alt='login-illustration'
               src={`https://wanitaislam.or.id/wp-content/uploads/2022/08/215cae94-36d7-424d-92ee-143d2e7b0e81.jpg`}
             />
@@ -209,11 +210,7 @@ const LoginPage = () => {
                 justifyContent: 'center'
               }}
             >
-              <img
-                src='/images/logo-wanita-islam.png'
-                alt='Logo Wanita Islam'
-                width={50}
-              />
+              <img src='/images/logo-wanita-islam.png' alt='Logo Wanita Islam' width={50} />
               <Typography variant='h6' sx={{ ml: 2, lineHeight: 1, fontWeight: 700, fontSize: '1.5rem !important' }}>
                 {themeConfig.templateName}
               </Typography>
@@ -319,11 +316,7 @@ const LoginPage = () => {
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ mr: 2, color: 'text.secondary' }}>Belum punya akun?</Typography>
-                <Typography
-                  href='/register'
-                  component={Link}
-                  sx={{ color: 'primary.main', textDecoration: 'none' }}
-                >
+                <Typography href='/register' component={Link} sx={{ color: 'primary.main', textDecoration: 'none' }}>
                   Daftar
                 </Typography>
               </Box>

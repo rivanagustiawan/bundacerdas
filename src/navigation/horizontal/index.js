@@ -4,18 +4,19 @@ const navigation = () => [
     path: '/home',
     icon: 'mdi:home-outline'
   },
-  {
-    title: 'Second Page',
-    path: '/second-page',
-    icon: 'mdi:email-outline'
-  },
-  {
-    path: '/acl',
-    action: 'read',
-    subject: 'acl-page',
-    title: 'Access Control',
-    icon: 'mdi:shield-outline'
-  },
+
+  // {
+  //   title: 'Second Page',
+  //   path: '/second-page',
+  //   icon: 'mdi:email-outline'
+  // },
+  // {
+  //   path: '/acl',
+  //   action: 'read',
+  //   subject: 'acl-page',
+  //   title: 'Access Control',
+  //   icon: 'mdi:shield-outline'
+  // },
   {
     title: 'User',
     icon: 'mdi:account-outline',
@@ -23,9 +24,9 @@ const navigation = () => [
       {
         title: 'List',
         path: '/user'
-      },
+      }
     ]
-  },
+  }
 ]
 
 export default navigation
