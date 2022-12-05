@@ -16,7 +16,17 @@ const navigation = () => {
       subject: 'acl-page',
       title: 'Access Control',
       icon: 'mdi:shield-outline'
-    }
+    },
+    {
+      title: 'User',
+      icon: 'mdi:account-outline',
+      children: [
+        {
+          title: 'List',
+          path: '/user'
+        },
+      ]
+    },
   ]
 }
 

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,9 +33,10 @@ Route::group([
   "middleware" => "api",
   "namespace"  => "App\Http\Controllers"
 ], function ($router) {
+
   Route::get("get/provinces", [AuthController::class, "getProvinces"]);
   Route::get("get/regencies/{province}", [AuthController::class, "getRegencies"]);
   Route::get("get/districts/{regency}", [AuthController::class, "getDistricts"]);
   Route::get("get/villages/{district}", [AuthController::class, "getVillages"]);
-  Route::resource("todos", "TodoController");
+  Route::resource('users', UserController::class);
 });

@@ -63,6 +63,7 @@ const AuthProvider = ({ children }) => {
           })
       } else {
         setLoading(false)
+        router.replace('/login')
       }
     }
     initAuth()

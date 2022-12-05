@@ -37,8 +37,9 @@ captcha/*
 phploy
 phploy.ini
 
-/backend/vendor/*
-/frontend/node_modules/*
+backend/vendor
+backend/.env
+frontend/node_modules/*
 
 # IDE Files
 #-------------------------
