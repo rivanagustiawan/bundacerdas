@@ -4137,7 +4137,7 @@
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
   "version" "3.2.0"
 
-"react-hook-form@7.38.0":
+"react-hook-form@^7.38.0":
   "integrity" "sha512-gxWW1kMeru9xR1GoR+Iw4hA+JBOM3SHfr4DWCUKY0xc7Vv1MLsF109oHtBeWl9shcyPFx67KHru44DheN0XY5A=="
   "resolved" "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.38.0.tgz"
   "version" "7.38.0"

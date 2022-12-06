@@ -93,7 +93,12 @@ const RowOptions = ({ id }) => {
           <Icon icon='mdi:eye-outline' fontSize={20} />
           View
         </MenuItem>
-        <MenuItem onClick={handleRowOptionsClose} sx={{ '& svg': { mr: 2 } }} href={`/user/edit/${id}`}>
+        <MenuItem
+          component={Link}
+          onClick={handleRowOptionsClose}
+          sx={{ '& svg': { mr: 2 } }}
+          href={`/user/edit/${id}`}
+        >
           <Icon icon='mdi:pencil-outline' fontSize={20} />
           Edit
         </MenuItem>
@@ -274,30 +279,41 @@ export default function Index() {
   const [kecamatan, setKecamatan] = useState('')
   const [arrayKota, setArrayKota] = useState([])
   const [pageSize, setPageSize] = useState(10)
+  const [page, setPage] = useState(0)
+  const [rowCount, setRowCount] = useState()
   const [pengurus, setPengurus] = useState('')
   const [provinsi, setProvinsi] = useState('')
   const [filter, setFilter] = useState('')
   const [kota, setKota] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   async function fetchData() {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     try {
-      const response = await axios.get(`${configs.API_URL}/users?${filterBy}=${filter}`, {
-        params: {
-          jenis_pengurus: `${pengurus}`,
-          provinsi: `${provinsi}`,
-          kota: `${kota}`,
-          kecamatan: `${kecamatan}`,
-          kelurahan: `${kelurahan}`,
-          dari: `${filterDari}`,
-          sampai: `${filterSampai}`
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${storedToken}`
+      setIsLoading(true)
+
+      const response = await axios.get(
+        `${configs.API_URL}/users?${filterBy}=${filter}&page=${page + 1}&pageSize=${pageSize}`,
+        {
+          params: {
+            jenis_pengurus: `${pengurus}`,
+            provinsi: `${provinsi}`,
+            kota: `${kota}`,
+            kecamatan: `${kecamatan}`,
+            kelurahan: `${kelurahan}`,
+            dari: `${filterDari}`,
+            sampai: `${filterSampai}`
+          },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${storedToken}`
+          }
         }
-      })
-      setTableData(response.data.user)
+      )
+      console.log(response)
+      setTableData(response.data.user.data)
+      setRowCount(response.data.user.total)
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -321,6 +337,14 @@ export default function Index() {
 
   const handleFilter = () => {
     fetchData()
+  }
+  function handlePage(newPage) {
+    setPage(newPage)
+    console.log(page)
+  }
+  function handlePageSize(newPageSize) {
+    setPageSize(newPageSize)
+    console.log(pageSize)
   }
 
   const handleResetFilter = () => {
@@ -350,7 +374,7 @@ export default function Index() {
   useEffect(() => {
     fetchData()
     getProvinces()
-  }, [pengurus, provinsi, kota, kecamatan, filterDari, filterSampai, filterBy, filter, getProvinces])
+  }, [page, pageSize, pengurus, provinsi, kota, kecamatan, filterDari, filterSampai, filterBy, filter])
 
   return (
     <Grid container spacing={6}>
@@ -548,16 +572,23 @@ export default function Index() {
               </Grid>
             </Grid>
           </CardContent>
-          <Divider />
           <DataGrid
             autoHeight
+            style={{
+              display: 'flex',
+              flexDirection: 'column-reverse'
+            }}
             rows={tableData}
             columns={columns}
             checkboxSelection
+            rowCount={rowCount}
+            page={page}
             pageSize={pageSize}
+            paginationMode='server'
+            onPageChange={newPage => handlePage(newPage)}
             disableSelectionOnClick
             rowsPerPageOptions={[10, 25, 50]}
-            onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+            onPageSizeChange={newPageSize => handlePageSize(newPageSize)}
           />
         </Card>
       </Grid>
