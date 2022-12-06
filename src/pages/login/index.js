@@ -153,10 +153,15 @@ const LoginPage = () => {
             message: errorField.password
           })
         }
-      } else {
+      } else if (errors.type === 'attempt') {
         setError('loginAttempt', {
           type: 'manual',
           message: 'Email atau password salah!'
+        })
+      } else if (errors.type === 'unactivated') {
+        setError('unactivated', {
+          type: 'manual',
+          message: 'Oopss! Email anda belum diaktivasi. Silahkan check email anda untuk melakukan aktivasi'
         })
       }
     })
@@ -171,8 +176,6 @@ const LoginPage = () => {
     setEnteredPassword(e.target.value)
     clearErrors('loginAttempt')
   }
-
-  const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 
   return (
     <Box className='content-right'>
@@ -237,6 +240,27 @@ const LoginPage = () => {
                   }
                 >
                   {errors.loginAttempt.message}
+                </Alert>
+              </Fade>
+            )}
+
+            {/* Alert unactivated */}
+            {errors.unactivated && (
+              <Fade in={errors.unactivated}>
+                <Alert
+                  severity='error'
+                  action={
+                    <IconButton
+                      size='small'
+                      color='inherit'
+                      aria-label='close'
+                      onClick={() => clearErrors('unactivated')}
+                    >
+                      <Icon icon='mdi:close' fontSize='inherit' />
+                    </IconButton>
+                  }
+                >
+                  {errors.unactivated.message}
                 </Alert>
               </Fade>
             )}

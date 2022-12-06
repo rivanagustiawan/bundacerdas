@@ -32,6 +32,7 @@ import { useRouter } from 'next/router'
 import ConfirmRegisData from 'src/components/alert/ConfirmRegistration'
 import RegistrationSuccess from 'src/components/alert/RegistrationSuccess'
 import axios from 'axios'
+import configs from 'src/configs/configs'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -182,7 +183,7 @@ const Register = () => {
 
   const getProvinces = async () => {
     await axios
-      .get('https://api-wi.schverse.my.id/api/get/provinces')
+      .get(`${configs.API_URL}/get/provinces`)
       .then(async response => {
         setProvinces(response.data.data.provinces)
       })
@@ -193,7 +194,7 @@ const Register = () => {
 
   const getRegencies = async provinceId => {
     await axios
-      .get(`https://api-wi.schverse.my.id/api/get/regencies/${provinceId}`)
+      .get(`${configs.API_URL}/get/regencies/${provinceId}`)
       .then(async response => {
         setRegencies(response.data.data.regencies)
       })
@@ -204,7 +205,7 @@ const Register = () => {
 
   const getDistricts = async regencyId => {
     await axios
-      .get(`https://api-wi.schverse.my.id/api/get/districts/${regencyId}`)
+      .get(`${configs.API_URL}/get/districts/${regencyId}`)
       .then(async response => {
         setDistricts(response.data.data.districts)
       })
@@ -215,7 +216,7 @@ const Register = () => {
 
   const getVillages = async districtId => {
     await axios
-      .get(`https://api-wi.schverse.my.id/api/get/villages/${districtId}`)
+      .get(`${configs.API_URL}/get/villages/${districtId}`)
       .then(async response => {
         setVillages(response.data.data.villages)
       })

@@ -1,7 +1,7 @@
-const BASE_URL = 'https://api-wi.schverse.my.id'
+const BASE_URL = 'http://127.0.0.1:8000'
 
 const configs = {
-  BASE_URL: 'https://api-wi.schverse.my.id',
+  BASE_URL: 'http://127.0.0.1:8000',
   API_URL: `${BASE_URL}/api`
 }
 

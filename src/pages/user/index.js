@@ -350,7 +350,7 @@ export default function Index() {
   useEffect(() => {
     fetchData()
     getProvinces()
-  }, [pengurus, provinsi, kota, kecamatan, filterDari, filterSampai, filterBy, filter])
+  }, [pengurus, provinsi, kota, kecamatan, filterDari, filterSampai, filterBy, filter, getProvinces])
 
   return (
     <Grid container spacing={6}>
