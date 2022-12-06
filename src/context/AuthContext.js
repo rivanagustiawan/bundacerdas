@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
         // console.log('Stored token : ', storedToken)
         setLoading(true)
         await axios
-          .get(`${configs.API_URL}/api/auth/profile`, {
+          .get(`${configs.API_URL}/auth/profile`, {
             headers: {
               Authorization: `Bearer ${storedToken}`
             }

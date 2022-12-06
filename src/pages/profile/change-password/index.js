@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
@@ -19,12 +19,12 @@ import InputAdornment from '@mui/material/InputAdornment'
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
 
-
 import authConfig from 'src/configs/auth'
 import configs from 'src/configs/configs'
 
 function Change() {
-const [error, setError] = useState([])  
+  const [error, setError] = useState([])
+
   const [values, setValues] = useState({
     oldPassword: '',
     showOldPassword: false,
@@ -33,8 +33,9 @@ const [error, setError] = useState([])
     confirmNewPassword: '',
     showConfirmNewPassword: false
   })
-// Handle Old Password
-const handleOldPasswordChange = prop => event => {
+
+  // Handle Old Password
+  const handleOldPasswordChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
 
@@ -45,10 +46,10 @@ const handleOldPasswordChange = prop => event => {
   const handleMouseDownOldPassword = event => {
     event.preventDefault()
   }
-// End Handle old Password
- 
 
-// Handle New Password
+  // End Handle old Password
+
+  // Handle New Password
 
   const handleNewPasswordChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -61,7 +62,8 @@ const handleOldPasswordChange = prop => event => {
   const handleMouseDownNewPassword = event => {
     event.preventDefault()
   }
-// End Handle New Password
+
+  // End Handle New Password
 
   // Handle Confirm Password
   const handleConfirmNewPasswordChange = prop => event => {
@@ -75,43 +77,44 @@ const handleOldPasswordChange = prop => event => {
   const handleMouseDownConfirmNewPassword = event => {
     event.preventDefault()
   }
-// End Handle Confirm Password
 
-async function postData() {
+  // End Handle Confirm Password
+
+  async function postData() {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     try {
       const response = await axios({
-          method: "post",
-          url: `${configs.API_URL}/profile/change-password`,
-          data: values,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${storedToken}`
-          },
-      });
-      window.location.href='/profile/view'
-      } catch(errors) {
-        console.log(errors)
+        method: 'post',
+        url: `${configs.API_URL}/profile/change-password`,
+        data: values,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${storedToken}`
+        }
+      })
+      window.location.href = '/profile/view'
+    } catch (errors) {
+      console.log(errors)
       setError(errors.response.data.errors)
       console.log(error)
-      }
+    }
   }
 
-  const handleForm = (e) =>{
+  const handleForm = e => {
     e.preventDefault()
+
     // console.log(values)
     postData()
   }
 
   return (
     <Grid>
-    <Grid item xs={6}  >
-        <Card >
-          <CardHeader title='Change Password'/>
+      <Grid item xs={6}>
+        <Card>
+          <CardHeader title='Change Password' />
           <CardContent>
             <form onSubmit={handleForm}>
               <Grid container spacing={6}>
-
                 <Grid item xs={12} sm={12}>
                   <FormControl error={error.oldPassword && 'true'} fullWidth>
                     <InputLabel htmlFor='user-view-security-new-password'>Password Lama</InputLabel>
@@ -133,12 +136,10 @@ async function postData() {
                           </IconButton>
                         </InputAdornment>
                       }
-                      />
-                      {error.oldPassword && (
-                        <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                          {error.oldPassword}
-                        </FormHelperText>
-                      )}
+                    />
+                    {error.oldPassword && (
+                      <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>{error.oldPassword}</FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
 
@@ -167,10 +168,8 @@ async function postData() {
                     />
 
                     {error.newPassword && (
-                        <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                          {error.newPassword}
-                        </FormHelperText>
-                      )}
+                      <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>{error.newPassword}</FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
 
@@ -197,10 +196,10 @@ async function postData() {
                       }
                     />
                     {error.confirmNewPassword && (
-                        <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                          {error.confirmNewPassword}
-                        </FormHelperText>
-                      )}
+                      <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
+                        {error.confirmNewPassword}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
 
@@ -214,14 +213,13 @@ async function postData() {
           </CardContent>
         </Card>
       </Grid>
-      </Grid>
+    </Grid>
   )
 }
 
-
 Change.acl = {
-    action: 'read',
-    subject: 'acl-page'
-  }
+  action: 'read',
+  subject: 'acl-page'
+}
 
 export default Change

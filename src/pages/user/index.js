@@ -380,14 +380,14 @@ export default function Index() {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Typography variant='h4' sx={{ mb: 4 }}>
-          Register All
+          List User
         </Typography>
         <Card>
           <CardHeader />
           <CardContent>
             <Grid container spacing={1}>
-              <Grid>
-                <FormControl sx={{ mr: 2, mt: 4, minWidth: 350 }} size='small'>
+              <Grid item xs={12} md={4}>
+                <FormControl sx={{ mr: 2, mt: 4, minWidth: '100%' }} size='small'>
                   <InputLabel id='pengurus-select'>Jenis Pengurus</InputLabel>
                   <Select
                     fullWidth
@@ -408,8 +408,8 @@ export default function Index() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid>
-                <FormControl sx={{ mr: 2, mt: 4, minWidth: 350 }} size='small'>
+              <Grid item xs={12} md={4}>
+                <FormControl sx={{ mr: 2, mt: 4, minWidth: '100%' }} size='small'>
                   <TextField
                     size='small'
                     fullWidth
@@ -420,8 +420,8 @@ export default function Index() {
                   />
                 </FormControl>
               </Grid>
-              <Grid>
-                <FormControl sx={{ mr: 2, mt: 4, minWidth: 350 }} size='small'>
+              <Grid item xs={12} md={4}>
+                <FormControl sx={{ mr: 2, mt: 4, minWidth: '100%' }} size='small'>
                   <InputLabel id='filter-select'>-- Filter Berdasarkan --</InputLabel>
                   <Select
                     fullWidth
@@ -439,8 +439,10 @@ export default function Index() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid>
-                <FormControl sx={{ mr: 2, mt: 4, minWidth: 260 }} size='small'>
+            </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6}>
+                <FormControl sx={{ mr: 2, mt: 4, minWidth: '100%' }} size='small'>
                   <InputLabel>-- Filter Provinsi --</InputLabel>
                   <Select
                     fullWidth
@@ -462,8 +464,8 @@ export default function Index() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid>
-                <FormControl sx={{ mr: 2, mt: 4, minWidth: 260 }} size='small'>
+              <Grid item xs={12} md={6}>
+                <FormControl sx={{ mr: 2, mt: 4, minWidth: '100%' }} size='small'>
                   <InputLabel>-- Filter Kota --</InputLabel>
                   <Select
                     fullWidth
@@ -486,8 +488,8 @@ export default function Index() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid>
-                <FormControl sx={{ mr: 2, mt: 4, minWidth: 260 }} size='small'>
+              <Grid item xs={12} md={6}>
+                <FormControl sx={{ mr: 2, mt: 4, minWidth: '100%' }} size='small'>
                   <InputLabel>-- Filter Kecamatan --</InputLabel>
                   <Select
                     fullWidth
@@ -510,8 +512,8 @@ export default function Index() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid>
-                <FormControl sx={{ mr: 2, mt: 4, minWidth: 260 }} size='small'>
+              <Grid item xs={12} md={6}>
+                <FormControl sx={{ mr: 2, mt: 4, minWidth: '100%' }} size='small'>
                   <InputLabel>-- Filter Kelurahan --</InputLabel>
                   <Select
                     fullWidth
@@ -534,7 +536,9 @@ export default function Index() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid sx={{ mr: 2, mt: 4 }}>
+            </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={4} sx={{ mr: 2, mt: 4 }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
                     label='Dari'
@@ -545,7 +549,7 @@ export default function Index() {
                   />
                 </LocalizationProvider>
               </Grid>
-              <Grid sx={{ mr: 2, mt: 4 }}>
+              <Grid item xs={12} md={4} sx={{ mr: 2, mt: 4 }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
                     label='Sampai'
@@ -556,7 +560,7 @@ export default function Index() {
                   />
                 </LocalizationProvider>
               </Grid>
-              <Grid item sm={4} xs={12}>
+              <Grid item>
                 <Button sx={{ mb: 2, mt: 3, mr: 2 }} size='large' variant='contained' onClick={handleFilter}>
                   <TuneIcon />
                 </Button>
