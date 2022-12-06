@@ -14,7 +14,7 @@ const defineRulesFor = (role, subject) => {
   } else if (role == 'admin') {
     can('manage', 'all')
   } else if (role === 'user') {
-    can(['read'], 'acl-page')
+    can(['read','update'], 'acl-page')
   } else {
     can(['read', 'create', 'update', 'delete'], subject)
   }

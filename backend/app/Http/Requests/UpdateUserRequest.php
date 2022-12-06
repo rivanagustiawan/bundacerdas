@@ -27,6 +27,8 @@ class UpdateUserRequest extends FormRequest
                 "jenis_pengurus"        => "required|string",
                 "name"                  => "required|string|between:2,100",
                 "jabatan"               => "required|string",
+                "email"                 => "required|email|unique:users,email",
+                "no_hp"                 => "required|string",
                 "tempat_lahir"          => "required|string",
                 "tanggal_lahir"         => "required|string",
                 "pendidikan_terakhir"   => "required|string",
@@ -38,7 +40,15 @@ class UpdateUserRequest extends FormRequest
                 "memiliki_anak_sekolah" => "required",
                 "jenis_hp"              => "",
                 "type_hp"               => "",
-                "dompet_digital"        => "required",
+                "dompet_digital"        => "",
         ];
     }
+    public function messages()
+         {
+             return [
+                "required" => 'Tidak Boleh Kosong.',
+                "email"     => 'Format Email Salah.',
+                "unique"    => 'Sudah Digunakan.'
+             ];
+         }
 }

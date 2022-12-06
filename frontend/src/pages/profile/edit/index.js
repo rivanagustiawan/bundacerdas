@@ -64,12 +64,13 @@ const Edit = ({id}) => {
         setIsLoading(true)
         const response = await axios({
             method: "get",
-            url: `${configs.API_URL}/users/${id}/edit`,
+            url: `${configs.API_URL}/profile/edit`,
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${storedToken}`
             },
         });
+        console.log(response)
         setDataUser(response.data.user)
         getProvinces()
         getRegency(response.data.user.provinsi)
@@ -86,16 +87,17 @@ const Edit = ({id}) => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
       try {
         const response = await axios({
-            method: "put",
-            url: `${configs.API_URL}/users/${id}`,
+            method: "post",
+            url: `${configs.API_URL}/profile/update`,
             data: dataUser,
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${storedToken}`
             },
         });
-        window.location.href='/user'
+        window.location.href='/profile/view'
         } catch(error) {
+          // console.log(error)
         setError(error.response.data.errors)
         }
     }
@@ -176,13 +178,13 @@ const Edit = ({id}) => {
   return (
     <Grid item xs={12}>
         <Card>
-          <CardHeader title='Edit Data User' />
+          <CardHeader title='Edit Profile' />
           <CardContent>
             <Alert icon={false} severity='warning' sx={{ mb: 6 }}>
               <AlertTitle sx={{ fontWeight: 600, mb: theme => `${theme.spacing(1)} !important` }}>
                 Peringatan !!
               </AlertTitle>
-              Mohon Teliti dan Bertanggung Jawab Dalam Mengedit Data User.
+              Mohon Teliti dan Bertanggung Jawab Dalam Mengedit Profile.
             </Alert>
 
             <form onSubmit={handleSubmit}>
@@ -197,10 +199,10 @@ const Edit = ({id}) => {
                       label='Nama Lengkap'
                     />
                     {error.name && (
-                        <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                          {error.name}
-                        </FormHelperText>
-                      )}
+                      <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
+                        {error.name}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
 
@@ -230,16 +232,11 @@ const Edit = ({id}) => {
                   <FormControl error={error.email && 'true'} fullWidth>
                     <InputLabel htmlFor='user-view-security-confirm-new-password'>Email</InputLabel>
                     <OutlinedInput
-                      onChange={(e) => handleForm(e)}
+                      readOnly
                       id="email"
                       value={dataUser.email}
                       label='Email'
                     />
-                    {error.email && (
-                        <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                          {error.email}
-                        </FormHelperText>
-                      )}
                   </FormControl>
                 </Grid>
                 
@@ -247,16 +244,11 @@ const Edit = ({id}) => {
                   <FormControl error={error.no_hp && 'true'} fullWidth>
                     <InputLabel htmlFor='user-view-security-confirm-new-password'>Nomor Telpon</InputLabel>
                     <OutlinedInput
-                      onChange={(e) => handleForm(e)}
+                      readOnly
                       id="no_hp"
                       value={dataUser.no_hp}
                       label='Nomor Telpon'
                     />
-                    {error.no_hp && (
-                        <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                          {error.no_hp}
-                        </FormHelperText>
-                      )}
                   </FormControl>
                 </Grid>
 
@@ -270,17 +262,17 @@ const Edit = ({id}) => {
                       label='Jabatan'
                     />
                     {error.jabatan && (
-                        <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                          {error.jabatan}
-                        </FormHelperText>
-                      )}
+                      <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
+                        {error.jabatan}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
                   <FormControl error={error.jenis_pengurus && 'true'} fullWidth>
                     <InputLabel htmlFor='user-view-security-confirm-new-password'>Jenis Pengurus</InputLabel>
-                    <Select
+                      <Select
                         fullWidth
                         label='Jenis Pengurus'
                         value={dataUser.jenis_pengurus}
@@ -290,8 +282,8 @@ const Edit = ({id}) => {
                           {jenisPengurus.map(name => (
                             <MenuItem value={name} >{name}</MenuItem>
                           ))}
-                    </Select>
-                    {error.jenis_pengurus && (
+                      </Select>
+                      {error.jenis_pengurus && (
                         <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
                           {error.jenis_pengurus}
                         </FormHelperText>
@@ -309,10 +301,10 @@ const Edit = ({id}) => {
                       label='Tempat Lahir'
                     />
                     {error.tempat_lahir && (
-                        <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                          {error.tempat_lahir}
-                        </FormHelperText>
-                      )}
+                      <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
+                        {error.tempat_lahir}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 </Grid>
                 
@@ -327,7 +319,7 @@ const Edit = ({id}) => {
                         renderInput={(params) => <TextField size="large"  {...params} />}
                         />
                     </LocalizationProvider>
-                    {error.tanggal_lahir && (
+                      {error.tanggal_lahir && (
                         <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
                           {error.tanggal_lahir}
                         </FormHelperText>
@@ -349,8 +341,8 @@ const Edit = ({id}) => {
                             {pendidikan.map(name => (
                             <MenuItem value={name} >{name}</MenuItem>
                           ))}
-                        </Select> 
-                      {error.pendidikan_terakhir && (
+                        </Select>
+                        {error.pendidikan_terakhir && (
                           <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
                             {error.pendidikan_terakhir}
                           </FormHelperText>
@@ -504,12 +496,7 @@ const Edit = ({id}) => {
                             <MenuItem value='0'>Tidak Memiliki</MenuItem>
                             <MenuItem value='Android'>Android</MenuItem>
                             <MenuItem value='Iphone'>Iphone</MenuItem>
-                      </Select>
-                        {error.jenis_hp && (
-                          <FormHelperText sx={{ color: 'error.main', marginTop: 2 }}>
-                            {error.jenis_hp}
-                          </FormHelperText>
-                        )}
+                        </Select>
                   </FormControl>
                 </Grid>
                 
@@ -546,7 +533,7 @@ const Edit = ({id}) => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <Button href='/user' color='error' variant='contained' sx={{ mr:4 }}>
+                  <Button href='/profile/view' color='error' variant='contained' sx={{ mr:4 }}>
                     Kembali
                   </Button>
                   <Button type='submit' variant='contained' >
@@ -561,10 +548,11 @@ const Edit = ({id}) => {
   )
 }
 
-export default Edit
 
-Edit.getInitialProps = async ({ query }) => {
-    const {id} = query
-  
-    return {id}
-  }
+Edit.acl = {
+  action: 'read',
+  subject: 'acl-page'
+}
+
+
+export default Edit

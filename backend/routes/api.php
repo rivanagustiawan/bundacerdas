@@ -39,6 +39,10 @@ Route::group([
   Route::get("get/regencies/{province}", [AuthController::class, "getRegencies"]);
   Route::get("get/districts/{regency}", [AuthController::class, "getDistricts"]);
   Route::get("get/villages/{district}", [AuthController::class, "getVillages"]);
+  Route::get('profile/view', [AuthController::class, 'showProfile']);
+  Route::get('profile/edit', [AuthController::class, 'editProfile']);
+  Route::post('profile/update', [AuthController::class, 'updateProfile']);
+  Route::post('profile/change-password', [AuthController::class, 'changePassword']);
   
   Route::resource('users', UserController::class);
   // Route::resource("todos", "TodoController");

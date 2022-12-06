@@ -4,15 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Regency;
+use App\Models\Village;
 use App\Models\District;
 use App\Models\Province;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Mail\RegistrationMail;
+use Illuminate\Support\Carbon;
+use App\Rules\MatchOldPassword;
 use App\Http\Controllers\Helper;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdateProfileRequest;
 
 class AuthController extends Controller
 {
@@ -176,6 +183,103 @@ class AuthController extends Controller
   {
     return Auth::guard();
   }
+
+  public function showProfile(){
+
+    $user   =  User::where('id', auth('api')->user()->id)->first();
+
+    if(!$user){
+        return response()->json([
+            "error"         => true,
+            "message"       => "User Not Found !"
+        ],Response::HTTP_NOT_FOUND);
+    }
+
+    // proses merubah kode wilayah menjadi nama wilayah
+    $user->kecamatan    = District::where('id' , $user->kecamatan)->first()->name;
+    $user->provinsi     = Province::where('id' , $user->provinsi)->first()->name;
+    $user->kelurahan    = Village::where('id' , $user->kelurahan)->first()->name;
+    $user->kota         = Regency::where('id' , $user->kota)->first()->name;
+    
+    return response()->json([
+        "error"         => false,
+        "user"          => $user
+    ],Response::HTTP_OK);
+}
+
+public function editProfile(){
+
+    $user   =  User::where('id', auth('api')->user()->id)->first();
+
+    $user->dompet_digital = explode(',',$user->dompet_digital);
+
+    if(!$user){
+        return response()->json([
+            "error"         => true,
+            "message"       => "User Not Found !"
+        ],Response::HTTP_NOT_FOUND);
+    }
+
+    
+    return response()->json([
+        "error"         => false,
+        "user"          => $user
+    ],Response::HTTP_OK);
+}
+
+public function updateProfile(UpdateProfileRequest $request){
+
+  $request['tanggal_lahir'] =  Carbon::parse($request['tanggal_lahir'])->format("Y-m-d");
+
+  unset($request['created_at']);
+  unset($request['updated_at']);
+
+  $arrayDompetDigital = implode (",", $request->dompet_digital);
+
+  $user   =  User::where('id', auth('api')->user()->id)->update([
+      "jenis_pengurus"        => $request->jenis_pengurus,
+      "name"                  => $request->name,
+      "jabatan"               => $request->jabatan,
+      "tempat_lahir"          => $request->tempat_lahir,
+      "tanggal_lahir"         => $request->tanggal_lahir,
+      "pendidikan_terakhir"   => $request->pendidikan_terakhir,
+      "provinsi"              => $request->provinsi,
+      "kota"                  => $request->kota,
+      "kecamatan"             => $request->kecamatan,
+      "kelurahan"             => $request->kelurahan,
+      "alamat_lengkap"        => $request->alamat_lengkap,
+      "memiliki_anak_sekolah" => $request->memiliki_anak_sekolah,
+      "jenis_hp"              => $request->jenis_hp,
+      "type_hp"               => $request->type_hp,
+      "dompet_digital"        => $arrayDompetDigital,
+  ]);
+  
+  return response()->json([
+      "error"         => false,
+      "user"          => $user
+  ],Response::HTTP_OK);
+}
+
+public function changePassword(Request $request){
+
+  $request->validate([
+    'oldPassword'         => ['required', new MatchOldPassword],
+    'newPassword'         => 'required|min:6',
+    'confirmNewPassword'  => 'same:newPassword',
+  ],[
+    'required'  => ':attribute tidak boleh kosong',
+    'min'       => 'Minimal 6 karakter',
+    'same'      => 'Konfirmasi password harus sama dengan password baru.'
+  ]);
+
+  User::find(auth('api')->user()->id)->update(['password'=> Hash::make($request->newPassword)]);
+
+  return response()->json([
+    "error"         => false,
+    "message"       => 'Success Change password.'
+],Response::HTTP_OK);
+}
+
   public function getProvinces()
   {
     return response()->json([

@@ -20,6 +20,7 @@ class UserController extends Controller
     $user =  User::select('id', 'jenis_pengurus', 'nomor_anggota', 'users.name', 'jabatan', 'nik', 'no_hp', 'provinsi', 'kota', 'kecamatan', 'kelurahan', 'created_at')
                     ->with(['provinsi', 'kota','kecamatan','kelurahan'])
                     ->orderBy('created_at', 'DESC')
+                    
                     ->where(function($query){
                         $query->where('jenis_pengurus', 'like', '%' . request('jenis_pengurus') . '%')
                                 ->where('nomor_anggota', 'like', '%' . request('nomor_anggota') . '%')
@@ -43,12 +44,13 @@ class UserController extends Controller
                     })
                     ->when(request('dari'), function ($query){
                         $query->whereDate('created_at', '>=', request('dari'));
-                    });
+                    })
+                    ->paginate(request('pageSize'));
 
                     
         return response()->json([
             "error"         => false,
-            "user"          => $user->get()
+            "user"          => $user
         ],Response::HTTP_OK);
     }
 
@@ -102,7 +104,27 @@ class UserController extends Controller
         unset($request['created_at']);
         unset($request['updated_at']);
 
-        $user   =  User::where('nomor_anggota', $id)->update($request->all());
+        $arrayDompetDigital = implode (",", $request->dompet_digital);
+
+        $user   =  User::where('nomor_anggota', $id)->update([
+            "jenis_pengurus"        => $request->jenis_pengurus,
+            "name"                  => $request->name,
+            "jabatan"               => $request->jabatan,
+            "tempat_lahir"          => $request->tempat_lahir,
+            "email"                 => $request->email,
+            "no_hp"                 => $request->no_hp,
+            "tanggal_lahir"         => $request->tanggal_lahir,
+            "pendidikan_terakhir"   => $request->pendidikan_terakhir,
+            "provinsi"              => $request->provinsi,
+            "kota"                  => $request->kota,
+            "kecamatan"             => $request->kecamatan,
+            "kelurahan"             => $request->kelurahan,
+            "alamat_lengkap"        => $request->alamat_lengkap,
+            "memiliki_anak_sekolah" => $request->memiliki_anak_sekolah,
+            "jenis_hp"              => $request->jenis_hp,
+            "type_hp"               => $request->type_hp,
+            "dompet_digital"        => $arrayDompetDigital,
+        ]);
         
         return response()->json([
             "error"         => false,
