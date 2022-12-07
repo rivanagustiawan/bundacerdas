@@ -6,9 +6,9 @@ export default function RegistrationSuccess({ email }) {
   return (
     <>
       <Typography align='center' variant='subtitle1' mb={3}>
-        Data anda telah disimpan. Silahkan cek email anda untuk mendapatkan detail informasi yang telah kami kirimkan
-        berupa password untuk anda login. Selanjutnya anda akan diarahkan ke halaman saweria untuk mengirimkan donasi.
-        Pastikan anda menggunakan email dibawah ini. Silahkan klik salin untuk memudahkan anda.
+        Data Anda telah disimpan. Silakan cek email Anda kemudian login dengan memasukkan password sesuai dengan data
+        yang dikirimkan melalui email. Selanjutnya, Anda akan darahkan ke halaman Saweria untuk mengirimkan donasi.
+        Pastikan Anda memasukkan email di bawah ini ketika melakukan donasi. Klik salin untuk memudahkan Anda.
       </Typography>
       <Grid container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Grid item xs={8} mr={1}>

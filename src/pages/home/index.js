@@ -1,36 +1,67 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 // ** MUI Imports
-import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
+import CardStatisticsHorizontal from 'src/components/card-stats-horizontal'
+import Icon from 'src/@core/components/icon'
+
+import configs from 'src/configs/configs'
+import authConfig from 'src/configs/auth'
 
 const Home = () => {
+  const [totalMember, setTotalMember] = useState(0)
+  const [totalRegister, setTotalRegister] = useState(0)
+
+  useEffect(() => {
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+    ;(async () => {
+      try {
+        const response = await axios.get(`${configs.API_URL}/statistics/total-members`, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`
+          }
+        })
+
+        setTotalMember(response.data.data.total_member)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+    ;(async () => {
+      try {
+        const response = await axios.get(`${configs.API_URL}/statistics/total-register`, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`
+          }
+        })
+
+        setTotalRegister(response.data.data.total_register)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }, [])
+
   return (
     <Grid container spacing={6}>
+      {/* Total member */}
       <Grid item xs={12} md={6}>
-        <Card>
-          <CardHeader title='Dashboard Card 1 🚀'></CardHeader>
-          <CardContent>
-            <Typography sx={{ mb: 2 }}>All the best for your new project.</Typography>
-            <Typography>
-              Please make sure to read our Template Documentation to understand where to go from here and how to use our
-              template.
-            </Typography>
-          </CardContent>
-        </Card>
+        <CardStatisticsHorizontal
+          stats={totalMember}
+          title='Total Member'
+          sxAvatar={{ fontSize: '3rem', width: '4rem', height: '4rem' }}
+          icon={<Icon icon='mdi:account-outline' />}
+        />
       </Grid>
+      {/* Total Registrasi kemarin */}
       <Grid item xs={12} md={6}>
-        <Card>
-          <CardHeader title='Dashboard Card 2 🔒'></CardHeader>
-          <CardContent>
-            <Typography sx={{ mb: 2 }}>
-              Access Control (ACL) and Authentication (JWT) are the two main security features of our template and are
-              implemented in the starter-kit as well.
-            </Typography>
-            <Typography>Please read our Authentication and ACL Documentations to get more out of them.</Typography>
-          </CardContent>
-        </Card>
+        <CardStatisticsHorizontal
+          sxAvatar={{ fontSize: '3rem', width: '4rem', height: '4rem' }}
+          stats={totalRegister}
+          title='Total Registrasi kemarin'
+          icon={<Icon icon='mdi:account-details' />}
+        />
       </Grid>
     </Grid>
   )

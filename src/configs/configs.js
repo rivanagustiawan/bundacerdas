@@ -1,7 +1,12 @@
-const BASE_URL = 'http://127.0.0.1:8000'
+const ENV = 'local'
+
+const SERVER_URL_LOCAL = 'http://127.0.0.1:8000'
+const SERVER_URL_PROD = 'https://api-wi.schverse.my.id'
+
+const BASE_URL = ENV === 'local' ? SERVER_URL_LOCAL : SERVER_URL_PROD
 
 const configs = {
-  BASE_URL: 'http://127.0.0.1:8000',
+  BASE_URL: BASE_URL,
   API_URL: `${BASE_URL}/api`
 }
 

@@ -41,9 +41,10 @@ const RowOptions = ({ id }) => {
           Authorization: `Bearer ${storedToken}`
         }
       })
-      console.log(response)
+
+      // console.log(response)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 
@@ -309,11 +310,13 @@ export default function Index() {
   }
   function handlePage(newPage) {
     setPage(newPage)
-    console.log(page)
+
+    // console.log(page)
   }
   function handlePageSize(newPageSize) {
     setPageSize(newPageSize)
-    console.log(pageSize)
+
+    // console.log(pageSize)
   }
 
   const handleResetFilter = () => {
@@ -364,12 +367,13 @@ export default function Index() {
             }
           }
         )
-        console.log(response)
+
+        // console.log(response)
         setTableData(response.data.user.data)
         setRowCount(response.data.user.total)
         setIsLoading(false)
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     })()
 

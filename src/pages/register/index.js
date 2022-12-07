@@ -259,17 +259,10 @@ const Register = () => {
         success => {
           setInput(defaultInputs)
 
-          MySwal(
-            'Registrasi Berhasil',
-            <RegistrationSuccess email='dzulfikrialfik@gmail.com' />,
-            'success',
-            true,
-            false,
-            () => {
-              window.open('https://saweria.co/fikrialfik', '_blank')
-              router.replace('/login')
-            }
-          )
+          MySwal('Registrasi Berhasil', <RegistrationSuccess email={input.email} />, 'success', true, false, () => {
+            window.open('https://saweria.co/fikrialfik', '_blank')
+            router.replace('/login')
+          })
         },
         error => {
           const errors = error.response.data.errors
