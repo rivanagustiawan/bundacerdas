@@ -287,37 +287,6 @@ export default function Index() {
   const [kota, setKota] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  async function fetchData() {
-    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-    try {
-      setIsLoading(true)
-
-      const response = await axios.get(
-        `${configs.API_URL}/users?${filterBy}=${filter}&page=${page + 1}&pageSize=${pageSize}`,
-        {
-          params: {
-            jenis_pengurus: `${pengurus}`,
-            provinsi: `${provinsi}`,
-            kota: `${kota}`,
-            kecamatan: `${kecamatan}`,
-            kelurahan: `${kelurahan}`,
-            dari: `${filterDari}`,
-            sampai: `${filterSampai}`
-          },
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${storedToken}`
-          }
-        }
-      )
-      console.log(response)
-      setTableData(response.data.user.data)
-      setRowCount(response.data.user.total)
-      setIsLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
   async function getProvinces() {
     const response = await axios.get(`${configs.API_URL}/get/provinces`)
     setArrayProvinsi(response.data.data.provinces)
@@ -372,9 +341,40 @@ export default function Index() {
     setFilterSampai(e.$d.toISOString())
   }
   useEffect(() => {
-    fetchData()
+    ;(async () => {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+      try {
+        setIsLoading(true)
+
+        const response = await axios.get(
+          `${configs.API_URL}/users?${filterBy}=${filter}&page=${page + 1}&pageSize=${pageSize}`,
+          {
+            params: {
+              jenis_pengurus: `${pengurus}`,
+              provinsi: `${provinsi}`,
+              kota: `${kota}`,
+              kecamatan: `${kecamatan}`,
+              kelurahan: `${kelurahan}`,
+              dari: `${filterDari}`,
+              sampai: `${filterSampai}`
+            },
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${storedToken}`
+            }
+          }
+        )
+        console.log(response)
+        setTableData(response.data.user.data)
+        setRowCount(response.data.user.total)
+        setIsLoading(false)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+
     getProvinces()
-  }, [page, pageSize, pengurus, provinsi, kota, kecamatan, filterDari, filterSampai, filterBy, filter])
+  }, [page, pageSize, pengurus, provinsi, kota, kecamatan, kelurahan, filterDari, filterSampai, filterBy, filter])
 
   return (
     <Grid container spacing={6}>

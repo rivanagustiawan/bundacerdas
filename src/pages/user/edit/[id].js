@@ -60,31 +60,6 @@ const Edit = ({ id }) => {
     setArrayKelurahan(response.data.data.villages)
   }
 
-  async function getData() {
-    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-    try {
-      setIsLoading(true)
-
-      const response = await axios({
-        method: 'get',
-        url: `${configs.API_URL}/users/${id}/edit`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${storedToken}`
-        }
-      })
-      setDataUser(response.data.user)
-      getProvinces()
-      getRegency(response.data.user.provinsi)
-      getDistricts(response.data.user.kota)
-      getVillages(response.data.user.kecamatan)
-      setDompetDigital(response.data.user.dompet_digital)
-      setArrayDompetDigital(response.data.user.dompet_digital)
-      setIsLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
   async function postData() {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     try {
@@ -169,8 +144,32 @@ const Edit = ({ id }) => {
     // console.log(dataUser)
   }
   useEffect(() => {
-    getData()
-  }, [])
+    ;(async () => {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+      try {
+        setIsLoading(true)
+
+        const response = await axios({
+          method: 'get',
+          url: `${configs.API_URL}/users/${id}/edit`,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${storedToken}`
+          }
+        })
+        setDataUser(response.data.user)
+        getProvinces()
+        getRegency(response.data.user.provinsi)
+        getDistricts(response.data.user.kota)
+        getVillages(response.data.user.kecamatan)
+        setDompetDigital(response.data.user.dompet_digital)
+        setArrayDompetDigital(response.data.user.dompet_digital)
+        setIsLoading(false)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }, [id])
   if (isLoading) return null
 
   return (

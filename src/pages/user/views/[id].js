@@ -28,26 +28,24 @@ export default function Index({ id }) {
   const [dataUser, setDataUser] = useState([])
 
   useEffect(() => {
-    getData()
-  }, [])
+    ;(async () => {
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+      try {
+        const response = await axios({
+          method: 'get',
+          url: `${configs.API_URL}/users/${id}`,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${storedToken}`
+          }
+        })
 
-  async function getData() {
-    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-    try {
-      const response = await axios({
-        method: 'get',
-        url: `${configs.API_URL}/users/${id}`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${storedToken}`
-        }
-      })
-
-      setDataUser(response.data.user)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+        setDataUser(response.data.user)
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }, [id])
 
   return (
     <Grid container spacing={6}>
