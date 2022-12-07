@@ -19,6 +19,12 @@ const navigation = () => [
     icon: 'mdi:account-outline',
     children: [
       {
+        title: 'Donasi',
+        action: 'read',
+        subject: 'acl-page',
+        path: '/profile/donasi'
+      },
+      {
         title: 'View',
         action: 'read',
         subject: 'acl-page',
