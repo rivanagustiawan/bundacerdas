@@ -1,4 +1,4 @@
-const ENV = 'prod'
+const ENV = 'local'
 
 const SERVER_URL_LOCAL = 'http://127.0.0.1:8000'
 const SERVER_URL_PROD = 'https://api-wi.schverse.my.id'

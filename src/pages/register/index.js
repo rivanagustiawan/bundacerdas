@@ -15,10 +15,11 @@ import FormControl from '@mui/material/FormControl'
 import { styled } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
 import MuiFormControlLabel from '@mui/material/FormControlLabel'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-import { FormHelperText, FormLabel, Grid, ListItemText, MenuItem, Radio, RadioGroup, Select } from '@mui/material'
+import { Fab, FormHelperText, FormLabel, Grid, ListItemText, MenuItem, Radio, RadioGroup, Select } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import DatePicker from 'react-datepicker'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
@@ -1021,6 +1022,25 @@ const Register = () => {
             </form>
           </CardContent>
         </Card>
+        <Fab
+          color='#075e54'
+          aria-label='add'
+          sx={{
+            position: 'fixed',
+            bottom: 30,
+            right: 30,
+            backgroundColor: '#128c7e',
+            ':hover': { backgroundColor: '#075e54' }
+          }}
+          onClick={() =>
+            window.open(
+              'https://api.whatsapp.com/send/?phone=6285640680815&text=Halo+SCHVerse%0A&type=phone_number&app_absent=0',
+              '_blank'
+            )
+          }
+        >
+          <WhatsAppIcon sx={{ color: 'white' }} />
+        </Fab>
       </Box>
     </DatePickerWrapper>
   )

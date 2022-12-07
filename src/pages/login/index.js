@@ -20,6 +20,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 import InputAdornment from '@mui/material/InputAdornment'
 import Typography from '@mui/material/Typography'
 import MuiFormControlLabel from '@mui/material/FormControlLabel'
+import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -42,7 +43,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
-import { Fade } from '@mui/material'
+import { Fab, Fade } from '@mui/material'
 
 // ** Styled Components
 const LoginIllustrationWrapper = styled(Box)(({ theme }) => ({
@@ -348,6 +349,25 @@ const LoginPage = () => {
           </BoxWrapper>
         </Box>
       </RightWrapper>
+      <Fab
+        color='#075e54'
+        aria-label='add'
+        sx={{
+          position: 'fixed',
+          bottom: 30,
+          right: 30,
+          backgroundColor: '#128c7e',
+          ':hover': { backgroundColor: '#075e54' }
+        }}
+        onClick={() =>
+          window.open(
+            'https://api.whatsapp.com/send/?phone=6285640680815&text=Halo+SCHVerse%0A&type=phone_number&app_absent=0',
+            '_blank'
+          )
+        }
+      >
+        <WhatsAppIcon sx={{ color: 'white' }} />
+      </Fab>
     </Box>
   )
 }

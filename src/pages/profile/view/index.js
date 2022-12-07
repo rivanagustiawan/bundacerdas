@@ -50,8 +50,8 @@ function View({ id }) {
   }, [])
 
   return (
-    <Grid container spacing={6} sx={{ width: 500 }}>
-      <Grid item xs={12}>
+    <Grid container>
+      <Grid item xs={12} md={8}>
         <Card>
           <CardContent>
             <Typography variant='h6'>Detail User</Typography>
@@ -168,7 +168,9 @@ function View({ id }) {
                       <Typography variant='body2'>Anak Yang Masih Sekolah</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='inherit'>: {dataUser.memiliki_anak_sekolah} Anak</Typography>
+                      <Typography variant='inherit'>
+                        : {dataUser.memiliki_anak_sekolah == '1' ? 'Ya' : 'Tidak'}
+                      </Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>

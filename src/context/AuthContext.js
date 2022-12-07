@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
             setUser({ ...response.data.data.user })
           })
           .catch(() => {
-            localStorage.removeItem('userData')
+            localStorage.removeItem(authConfig.userData)
             localStorage.removeItem('refreshToken')
             localStorage.removeItem('accessToken')
             setUser(null)
@@ -78,7 +78,9 @@ const AuthProvider = ({ children }) => {
 
         const returnUrl = router.query.returnUrl
         setUser({ ...response.data.user_data })
-        params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.user_data)) : null
+        params.rememberMe
+          ? window.localStorage.setItem(authConfig.userData, JSON.stringify(response.data.user_data))
+          : null
 
         const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
         router.replace(redirectURL)
@@ -90,7 +92,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     setUser(null)
-    window.localStorage.removeItem('userData')
+    window.localStorage.removeItem(authConfig.userData)
     window.localStorage.removeItem(authConfig.storageTokenKeyName)
     router.push('/login')
   }

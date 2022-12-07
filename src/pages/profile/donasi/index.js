@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
 
 import Grid from '@mui/material/Grid'
-import authConfig from 'src/configs/auth'
 import CardDonasi from 'src/components/card/CardDonasi'
 import CardTotalDonasi from 'src/components/card/CardTotalDonasi'
+import { useAuth } from 'src/hooks/useAuth'
 
 function Donasi() {
-  const user = window.localStorage.getItem(authConfig.UserData)
-  const userData = JSON.parse(user)
+  const auth = useAuth()
+
+  const [userData, setUserData] = useState({})
+
+  useEffect(() => {
+    setUserData(auth.user)
+  }, [auth])
 
   return (
     <Grid container spacing={6}>

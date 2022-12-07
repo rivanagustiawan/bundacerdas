@@ -166,7 +166,9 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Anak Yang Masih Sekolah</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.memiliki_anak_sekolah} Anak</Typography>
+                      <Typography variant='body2'>
+                        : {dataUser.memiliki_anak_sekolah == '1' ? 'Ya' : 'Tidak'}
+                      </Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
