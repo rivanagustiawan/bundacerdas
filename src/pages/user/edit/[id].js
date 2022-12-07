@@ -44,17 +44,14 @@ const Edit = ({ id }) => {
     const response = await axios.get(`${configs.API_URL}/get/provinces`)
     setArrayProvinsi(response.data.data.provinces)
   }
-
   async function getRegency(id) {
     const response = await axios.get(`${configs.API_URL}/get/regencies/${id}`)
     setArrayKota(response.data.data.regencies)
   }
-
   async function getDistricts(id) {
     const response = await axios.get(`${configs.API_URL}/get/districts/${id}`)
     setArrayKecamatan(response.data.data.districts)
   }
-
   async function getVillages(id) {
     const response = await axios.get(`${configs.API_URL}/get/villages/${id}`)
     setArrayKelurahan(response.data.data.villages)
@@ -485,6 +482,7 @@ const Edit = ({ id }) => {
                   <FormGroup row onChange={e => handleCheckBox(e)}>
                     {wallets.map(wallet => (
                       <FormControlLabel
+                        key={wallet}
                         value={wallet}
                         control={
                           <Checkbox
@@ -492,7 +490,6 @@ const Edit = ({ id }) => {
                           />
                         }
                         label={wallet}
-                        key={wallet}
                       />
                     ))}
                   </FormGroup>

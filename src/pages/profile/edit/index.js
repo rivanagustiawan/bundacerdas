@@ -142,7 +142,7 @@ const Edit = ({ id }) => {
     // console.log(dataUser)
   }
   useEffect(() => {
-    ;(async function () {
+    ;(async () => {
       const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
       try {
         setIsLoading(true)

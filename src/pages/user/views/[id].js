@@ -48,13 +48,13 @@ export default function Index({ id }) {
   }, [id])
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={6} sx={{ width: 500 }}>
       <Grid item xs={12}>
         <Card>
           <CardContent>
             <Typography variant='h6'>Detail User</Typography>
             <Divider />
-            <TableContainer sx={{ width: 400 }}>
+            <TableContainer sx={{ width: 'auto', display: 'table', tableLayout: 'fixed' }}>
               <Table>
                 <TableBody>
                   <TableRow>
@@ -62,7 +62,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Nama</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.name}</Typography>
+                      <Typography variant='inherit'>: {dataUser.name}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -70,7 +70,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>NIK</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.nik}</Typography>
+                      <Typography variant='inherit'>: {dataUser.nik}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -78,7 +78,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Jabatan</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.jabatan}</Typography>
+                      <Typography variant='inherit'>: {dataUser.jabatan}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -86,7 +86,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Tempat Lahir</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.tempat_lahir}</Typography>
+                      <Typography variant='inherit'>: {dataUser.tempat_lahir}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -94,7 +94,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Tanggal Lahir</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.tanggal_lahir}</Typography>
+                      <Typography variant='inherit'>: {dataUser.tanggal_lahir}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -102,7 +102,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Pendidikan Terakhir</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.pendidikan_terakhir}</Typography>
+                      <Typography variant='inherit'>: {dataUser.pendidikan_terakhir}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -110,7 +110,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Email</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.email}</Typography>
+                      <Typography variant='inherit'>: {dataUser.email}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -118,7 +118,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>No. Telp</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.no_hp}</Typography>
+                      <Typography variant='inherit'>: {dataUser.no_hp}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -126,7 +126,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Provinsi</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.provinsi}</Typography>
+                      <Typography variant='inherit'>: {dataUser.provinsi}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -134,7 +134,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Kota / Kabupaten</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.kota}</Typography>
+                      <Typography variant='inherit'>: {dataUser.kota}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -142,7 +142,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Kecamatan</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.kecamatan}</Typography>
+                      <Typography variant='inherit'>: {dataUser.kecamatan}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -150,7 +150,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Kelurahan</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.kelurahan}</Typography>
+                      <Typography variant='inherit'>: {dataUser.kelurahan}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -158,7 +158,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Alamat Lengkap</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.alamat_lengkap}</Typography>
+                      <Typography variant='inherit'>: {dataUser.alamat_lengkap}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -166,8 +166,8 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Anak Yang Masih Sekolah</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>
-                        : {dataUser.memiliki_anak_sekolah == '1' ? 'Ya' : 'Tidak'}
+                      <Typography variant='inherit'>
+                        : {dataUser.memiliki_anak_sekolah == 1 ? 'Ya' : 'Tidak'}
                       </Typography>
                     </MUITableCell>
                   </TableRow>
@@ -176,7 +176,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Jenis Handphone</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.jenis_hp}</Typography>
+                      <Typography variant='inherit'>: {dataUser.jenis_hp}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -184,7 +184,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Type Handphone</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.type_hp}</Typography>
+                      <Typography variant='inherit'>: {dataUser.type_hp}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -192,7 +192,7 @@ export default function Index({ id }) {
                       <Typography variant='body2'>Dompet Digital Yang Digunakan</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='body2'>: {dataUser.dompet_digital}</Typography>
+                      <Typography variant='inherit'>: {dataUser.dompet_digital}</Typography>
                     </MUITableCell>
                   </TableRow>
                 </TableBody>
@@ -201,7 +201,7 @@ export default function Index({ id }) {
           </CardContent>
 
           <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button variant='contained' sx={{ mr: 2 }} href='#'>
+            <Button variant='contained' sx={{ mr: 2 }} href={`/user/edit/${id}`}>
               Edit
             </Button>
             <Button color='error' variant='outlined' href='/user'>

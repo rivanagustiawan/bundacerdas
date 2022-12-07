@@ -2,22 +2,27 @@ import { useEffect, useState } from 'react'
 
 // ** MUI Imports
 import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import axios from 'axios'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
+import Alert from '@mui/material/Alert'
 import CardActions from '@mui/material/CardActions'
 import Table from '@mui/material/Table'
+import AlertTitle from '@mui/material/AlertTitle'
 import TableRow from '@mui/material/TableRow'
 import { styled, useTheme } from '@mui/material/styles'
 import TableCell from '@mui/material/TableCell'
 import TableBody from '@mui/material/TableBody'
+import CardHeader from '@mui/material/CardHeader'
 import TableContainer from '@mui/material/TableContainer'
 
 import authConfig from 'src/configs/auth'
 import configs from 'src/configs/configs'
+import { display } from '@mui/system'
 
 const MUITableCell = styled(TableCell)(({ theme }) => ({
   borderBottom: 0,
@@ -45,13 +50,29 @@ function View({ id }) {
       console.log(error)
     }
   }
+
   useEffect(() => {
     getData()
   }, [])
 
   return (
-    <Grid container>
-      <Grid item xs={12} md={8}>
+    <Grid container spacing={1} display='flex'>
+      <Grid item md={5} xs={12}>
+        <Grid item xs={12}>
+          <Card>
+            <CardHeader title='Change Password' />
+            <CardContent>
+              <Alert icon={false} severity='warning' sx={{ mb: 6 }}>
+                <AlertTitle sx={{ fontWeight: 600, mb: theme => `${theme.spacing(1)} !important` }}>
+                  Ensure that these requirements are met
+                </AlertTitle>
+                Minimum 8 characters long, uppercase & symbol
+              </Alert>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={7}>
         <Card>
           <CardContent>
             <Typography variant='h6'>Detail User</Typography>
@@ -168,9 +189,7 @@ function View({ id }) {
                       <Typography variant='body2'>Anak Yang Masih Sekolah</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='inherit'>
-                        : {dataUser.memiliki_anak_sekolah == '1' ? 'Ya' : 'Tidak'}
-                      </Typography>
+                      <Typography variant='inherit'>: {dataUser.memiliki_anak_sekolah} Anak</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -206,7 +225,7 @@ function View({ id }) {
             <Button variant='contained' sx={{ mr: 2 }} href={`/profile/edit`}>
               Edit
             </Button>
-            <Button color='error' variant='outlined' href='#'>
+            <Button color='error' variant='outlined'>
               Kembali
             </Button>
           </CardActions>
