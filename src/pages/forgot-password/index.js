@@ -1,13 +1,17 @@
 // ** Next Import
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
 // ** MUI Components
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import { LoadingButton } from '@mui/lab'
 import Box from '@mui/material/Box'
+import FormHelperText from '@mui/material/FormHelperText'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
+import Swal from 'sweetalert2'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -24,8 +28,15 @@ import { useSettings } from 'src/@core/hooks/useSettings'
 // ** Demo Imports
 import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2'
 
+
+import authConfig from 'src/configs/auth'
+import configs from 'src/configs/configs'
+import axios from 'axios'
+
+
 // Styled Components
-const ForgotPasswordIllustrationWrapper = styled(Box)(({ theme }) => ({
+
+const ForgotIllustrationWrapper = styled(Box)(({ theme }) => ({
   padding: theme.spacing(20),
   paddingRight: '0 !important',
   [theme.breakpoints.down('lg')]: {
@@ -33,7 +44,7 @@ const ForgotPasswordIllustrationWrapper = styled(Box)(({ theme }) => ({
   }
 }))
 
-const ForgotPasswordIllustration = styled('img')(({ theme }) => ({
+const ForgotIllustration = styled('img')(({ theme }) => ({
   maxWidth: '48rem',
   [theme.breakpoints.down('xl')]: {
     maxWidth: '38rem'
@@ -77,6 +88,9 @@ const LinkStyled = styled(Link)(({ theme }) => ({
 }))
 
 const ForgotPassword = () => {
+  const [error, setError] = useState([])
+  const [email, setEmail] = useState([])
+  const [loading, setLoading] = useState(false)
   // ** Hooks
   const theme = useTheme()
   const { settings } = useSettings()
@@ -85,8 +99,43 @@ const ForgotPassword = () => {
   const { skin } = settings
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
 
+  async function postData() {
+    try {
+      setLoading(true)
+      const response = await axios({
+        method: 'post',
+        url: `${configs.API_URL}/auth/forgot-password`,
+        data: email,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      setLoading(false)
+        Swal.fire({
+          title: 'Success!',
+          text: 'Silahkan Check Email !',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+        window.location.href = '/login'
+        })
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+      setError(error.response.data.errors)
+    }
+  }
+
+  const handleChangeEmail = (e) =>{
+    setEmail(prevInput => ({
+      ...prevInput,
+      email: e.target.value
+    }))
+  }
+
   const handleSubmit = e => {
     e.preventDefault()
+    postData()
   }
 
   const imageSource =
@@ -96,14 +145,15 @@ const ForgotPassword = () => {
     <Box className='content-right'>
       {!hidden ? (
         <Box sx={{ flex: 1, display: 'flex', position: 'relative', alignItems: 'center', justifyContent: 'center' }}>
-          <ForgotPasswordIllustrationWrapper>
-            <ForgotPasswordIllustration
-              alt='forgot-password-illustration'
-              src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
-            />
-          </ForgotPasswordIllustrationWrapper>
-          <FooterIllustrationsV2 image={`/images/pages/auth-v2-forgot-password-mask-${theme.palette.mode}.png`} />
-        </Box>
+        <ForgotIllustrationWrapper>
+          <ForgotIllustration
+            style={{ borderRadius: '30px' }}
+            alt='login-illustration'
+            src={`https://wanitaislam.or.id/wp-content/uploads/2022/08/215cae94-36d7-424d-92ee-143d2e7b0e81.jpg`}
+          />
+        </ForgotIllustrationWrapper>
+        <FooterIllustrationsV2 />
+      </Box>
       ) : null}
       <RightWrapper sx={skin === 'bordered' && !hidden ? { borderLeft: `1px solid ${theme.palette.divider}` } : {}}>
         <Box
@@ -117,7 +167,7 @@ const ForgotPassword = () => {
           }}
         >
           <BoxWrapper>
-            <Box
+          <Box
               sx={{
                 top: 30,
                 left: 40,
@@ -127,80 +177,12 @@ const ForgotPassword = () => {
                 justifyContent: 'center'
               }}
             >
-              <svg width={47} fill='none' height={26} viewBox='0 0 268 150' xmlns='http://www.w3.org/2000/svg'>
-                <rect
-                  rx='25.1443'
-                  width='50.2886'
-                  height='143.953'
-                  fill={theme.palette.primary.main}
-                  transform='matrix(-0.865206 0.501417 0.498585 0.866841 195.571 0)'
-                />
-                <rect
-                  rx='25.1443'
-                  width='50.2886'
-                  height='143.953'
-                  fillOpacity='0.4'
-                  fill='url(#paint0_linear_7821_79167)'
-                  transform='matrix(-0.865206 0.501417 0.498585 0.866841 196.084 0)'
-                />
-                <rect
-                  rx='25.1443'
-                  width='50.2886'
-                  height='143.953'
-                  fill={theme.palette.primary.main}
-                  transform='matrix(0.865206 0.501417 -0.498585 0.866841 173.147 0)'
-                />
-                <rect
-                  rx='25.1443'
-                  width='50.2886'
-                  height='143.953'
-                  fill={theme.palette.primary.main}
-                  transform='matrix(-0.865206 0.501417 0.498585 0.866841 94.1973 0)'
-                />
-                <rect
-                  rx='25.1443'
-                  width='50.2886'
-                  height='143.953'
-                  fillOpacity='0.4'
-                  fill='url(#paint1_linear_7821_79167)'
-                  transform='matrix(-0.865206 0.501417 0.498585 0.866841 94.1973 0)'
-                />
-                <rect
-                  rx='25.1443'
-                  width='50.2886'
-                  height='143.953'
-                  fill={theme.palette.primary.main}
-                  transform='matrix(0.865206 0.501417 -0.498585 0.866841 71.7728 0)'
-                />
-                <defs>
-                  <linearGradient
-                    y1='0'
-                    x1='25.1443'
-                    x2='25.1443'
-                    y2='143.953'
-                    id='paint0_linear_7821_79167'
-                    gradientUnits='userSpaceOnUse'
-                  >
-                    <stop />
-                    <stop offset='1' stopOpacity='0' />
-                  </linearGradient>
-                  <linearGradient
-                    y1='0'
-                    x1='25.1443'
-                    x2='25.1443'
-                    y2='143.953'
-                    id='paint1_linear_7821_79167'
-                    gradientUnits='userSpaceOnUse'
-                  >
-                    <stop />
-                    <stop offset='1' stopOpacity='0' />
-                  </linearGradient>
-                </defs>
-              </svg>
+              <img src='/images/logo-wanita-islam.png' alt='Logo Wanita Islam' width={50} />
               <Typography variant='h6' sx={{ ml: 2, lineHeight: 1, fontWeight: 700, fontSize: '1.5rem !important' }}>
                 {themeConfig.templateName}
               </Typography>
             </Box>
+
             <Box sx={{ mb: 6 }}>
               <TypographyStyled variant='h5'>Forgot Password? 🔒</TypographyStyled>
               <Typography variant='body2'>
@@ -208,10 +190,20 @@ const ForgotPassword = () => {
               </Typography>
             </Box>
             <form noValidate autoComplete='off' onSubmit={handleSubmit}>
-              <TextField autoFocus type='email' label='Email' sx={{ display: 'flex', mb: 4 }} />
-              <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 5.25 }}>
-                Send reset link
-              </Button>
+              <TextField autoFocus type='email' error={error.email && 'true'} label='Email' sx={{ display: 'flex', mb: 1 }} onChange={(e) => handleChangeEmail(e)} />
+              {error.email && (
+                <FormHelperText sx={{ color: 'error.main' }}>{error.email}</FormHelperText>
+              )}
+              <LoadingButton
+                fullWidth
+                type='submit'
+                size='large'
+                loading={loading}
+                variant='contained'
+                sx={{ mt: 5, mb:3 }}
+              >
+                 Send reset link
+              </LoadingButton>
               <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <LinkStyled href='/login'>
                   <Icon icon='mdi:chevron-left' fontSize='2rem' />
@@ -225,7 +217,7 @@ const ForgotPassword = () => {
     </Box>
   )
 }
-ForgotPassword.guestGuard = true
 ForgotPassword.getLayout = page => <BlankLayout>{page}</BlankLayout>
+ForgotPassword.guestGuard = true
 
 export default ForgotPassword

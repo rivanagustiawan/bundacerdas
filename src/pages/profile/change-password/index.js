@@ -8,6 +8,7 @@ import CardHeader from '@mui/material/CardHeader'
 import AlertTitle from '@mui/material/AlertTitle'
 import InputLabel from '@mui/material/InputLabel'
 import { FormHelperText } from '@mui/material'
+import Swal from 'sweetalert2'
 
 import IconButton from '@mui/material/IconButton'
 import axios from 'axios'
@@ -92,7 +93,14 @@ function Change() {
           Authorization: `Bearer ${storedToken}`
         }
       })
-      window.location.href = '/profile/view'
+      Swal.fire({
+        title: 'Success!',
+        text: 'Ganti Password Berhasil !',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        window.location.href = '/profile/view'
+      })
     } catch (errors) {
       console.log(errors)
       setError(errors.response.data.errors)

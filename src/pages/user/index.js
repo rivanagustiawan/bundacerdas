@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import Link from 'next/link'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MenuItem from '@mui/material/MenuItem'
 import IconButton from '@mui/material/IconButton'
 import Icon from 'src/@core/components/icon'
@@ -41,8 +41,6 @@ const RowOptions = ({ id }) => {
           Authorization: `Bearer ${storedToken}`
         }
       })
-
-      // console.log(response)
     } catch (error) {
       // console.log(error)
     }
@@ -273,6 +271,7 @@ export default function Index() {
   const [arrayKelurahan, setArrayKelurahan] = useState([])
   const [arrayProvinsi, setArrayProvinsi] = useState([])
   const [filterSampai, setFilterSampai] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [filterDari, setFilterDari] = useState('')
   const [filterBy, setFilterBy] = useState('all')
   const [kelurahan, setKelurahan] = useState('')
@@ -280,13 +279,12 @@ export default function Index() {
   const [kecamatan, setKecamatan] = useState('')
   const [arrayKota, setArrayKota] = useState([])
   const [pageSize, setPageSize] = useState(10)
-  const [page, setPage] = useState(0)
-  const [rowCount, setRowCount] = useState()
   const [pengurus, setPengurus] = useState('')
   const [provinsi, setProvinsi] = useState('')
+  const [rowCount, setRowCount] = useState()
   const [filter, setFilter] = useState('')
   const [kota, setKota] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [page, setPage] = useState(0)
 
   async function getProvinces() {
     const response = await axios.get(`${configs.API_URL}/get/provinces`)
@@ -304,21 +302,7 @@ export default function Index() {
     const response = await axios.get(`${configs.API_URL}/get/villages/${id}`)
     setArrayKelurahan(response.data.data.villages)
   }
-
-  const handleFilter = () => {
-    fetchData()
-  }
-  function handlePage(newPage) {
-    setPage(newPage)
-
-    // console.log(page)
-  }
-  function handlePageSize(newPageSize) {
-    setPageSize(newPageSize)
-
-    // console.log(pageSize)
-  }
-
+  
   const handleResetFilter = () => {
     setPengurus('')
     setFilter('')
@@ -331,7 +315,6 @@ export default function Index() {
     setFilterSampai('')
     setDari(dayjs(moment().format()))
     setSampai(dayjs(moment().format()))
-    fetchData()
   }
 
   const handleChangeDari = e => {
@@ -354,12 +337,12 @@ export default function Index() {
           {
             params: {
               jenis_pengurus: `${pengurus}`,
-              provinsi: `${provinsi}`,
-              kota: `${kota}`,
               kecamatan: `${kecamatan}`,
               kelurahan: `${kelurahan}`,
+              sampai: `${filterSampai}`,
+              provinsi: `${provinsi}`,
               dari: `${filterDari}`,
-              sampai: `${filterSampai}`
+              kota: `${kota}`
             },
             headers: {
               'Content-Type': 'application/json',
@@ -367,13 +350,11 @@ export default function Index() {
             }
           }
         )
-
-        // console.log(response)
         setTableData(response.data.user.data)
         setRowCount(response.data.user.total)
         setIsLoading(false)
       } catch (error) {
-        // console.log(error)
+        console.log(error)
       }
     })()
 
@@ -430,7 +411,7 @@ export default function Index() {
                   <Select
                     fullWidth
                     value={filterBy}
-                    label='Select filter'
+                    label='-- Filter Berdasarkan --'
                     labelId='filter-select'
                     onChange={e => setFilterBy(e.target.value)}
                     inputProps={{ placeholder: 'Select Filter' }}
@@ -451,7 +432,7 @@ export default function Index() {
                   <Select
                     fullWidth
                     value={provinsi}
-                    label='Select filter'
+                    label='-- Filter Provinsi --'
                     labelId='filter-select'
                     onChange={e => [setProvinsi(e.target.value), getRegency(e.target.value)]}
                     inputProps={{ placeholder: 'Select Provinsi' }}
@@ -475,7 +456,7 @@ export default function Index() {
                     fullWidth
                     value={kota}
                     disabled={provinsi ? '' : 'false'}
-                    label='Select filter'
+                    label='-- Filter Kota --'
                     labelId='filter-select'
                     onChange={e => [setKota(e.target.value), getDistricts(e.target.value)]}
                     inputProps={{ placeholder: 'Select Kota' }}
@@ -499,7 +480,7 @@ export default function Index() {
                     fullWidth
                     value={kecamatan}
                     disabled={kota ? '' : 'false'}
-                    label='Select filter'
+                    label='-- Filter Kecamatan --'
                     labelId='filter-select'
                     onChange={e => [setKecamatan(e.target.value), getVillages(e.target.value)]}
                     inputProps={{ placeholder: 'Select Kecamatan' }}
@@ -523,7 +504,7 @@ export default function Index() {
                     fullWidth
                     value={kelurahan}
                     disabled={kecamatan ? '' : 'false'}
-                    label='Select filter'
+                    label='-- Filter Kelurahan --'
                     labelId='filter-select'
                     onChange={e => setKelurahan(e.target.value)}
                     inputProps={{ placeholder: 'Select Kelurahan' }}
@@ -565,7 +546,7 @@ export default function Index() {
                 </LocalizationProvider>
               </Grid>
               <Grid item>
-                <Button sx={{ mb: 2, mt: 3, mr: 2 }} size='large' variant='contained' onClick={handleFilter}>
+                <Button sx={{ mb: 2, mt: 3, mr: 2 }} size='large' variant='contained' >
                   <TuneIcon />
                 </Button>
                 <Button
@@ -593,10 +574,18 @@ export default function Index() {
             page={page}
             pageSize={pageSize}
             paginationMode='server'
-            onPageChange={newPage => handlePage(newPage)}
+            onPageChange={newPage => setPage(newPage)}
             disableSelectionOnClick
             rowsPerPageOptions={[10, 25, 50]}
-            onPageSizeChange={newPageSize => handlePageSize(newPageSize)}
+            onPageSizeChange={newPageSize => setPageSize(newPageSize)}
+            localeText={{
+              MuiTablePagination: {
+                labelDisplayedRows: ({ from, to, count }) =>
+                  `${from} - ${to} Dari Total ${count}`,
+                labelRowsPerPage: `Menampilkan`
+              },
+              noRowsLabel:'Data tidak ditemukan.'
+            }}
           />
         </Card>
       </Grid>

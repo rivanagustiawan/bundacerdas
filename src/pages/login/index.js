@@ -340,6 +340,11 @@ const LoginPage = () => {
                 Masuk
               </Button>
               <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <Typography href='/forgot-password' component={Link} sx={{ color: 'primary.main', textDecoration: 'none' }}>
+                  Lupa Kata Sandi?
+                </Typography>
+              </Box>
+              <Box sx={{ mt:2,display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
                 <Typography sx={{ mr: 2, color: 'text.secondary' }}>Belum punya akun?</Typography>
                 <Typography href='/register' component={Link} sx={{ color: 'primary.main', textDecoration: 'none' }}>
                   Daftar
