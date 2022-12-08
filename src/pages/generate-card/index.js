@@ -4,7 +4,8 @@ import Grid from '@mui/material/Grid'
 import Logo from './logo.png'
 import Typography from '@mui/material/Typography'
 import Image from 'next/image'
-import Avatar from './foto.png'
+
+// import Avatar from './foto.png'
 import authConfig from 'src/configs/auth'
 import axios from 'axios'
 import configs from 'src/configs/configs'
@@ -12,8 +13,9 @@ import Button from '@mui/material/Button'
 import html2canvas from 'html2canvas'
 import downloadjs from 'downloadjs'
 
-function Card(props) {
+function Card() {
   const [dataUser, setDataUser] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleCaptureClick = async () => {
     const kartuAnggotaElements = document.querySelector('#kartu-anggota')
@@ -28,6 +30,7 @@ function Card(props) {
   }
 
   async function getData() {
+    setIsLoading(true)
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
     try {
       const response = await axios({
@@ -39,6 +42,7 @@ function Card(props) {
         }
       })
       setDataUser(response.data.user)
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
     }
@@ -46,6 +50,7 @@ function Card(props) {
   useEffect(() => {
     getData()
   }, [])
+  if (isLoading) return null
 
   return (
     <Box>
@@ -66,8 +71,8 @@ function Card(props) {
             justifyContent='center'
           >
             <Image
-              alt='user-image'
               src={Logo}
+              alt='logo-wanita-islam'
               margin={0}
               style={{
                 width: '140px',
@@ -75,7 +80,7 @@ function Card(props) {
               }}
             />
           </Grid>
-          <Grid item xs={9} direction='column' display='flex' justify='center' textAlign='center'>
+          <Grid xs={9} direction='column' display='flex' justify='center' textAlign='center'>
             <Typography variant='h6' display='block' sx={{ mt: 3, ml: -8 }} style={{ fontSize: 16 }} color='#fff'>
               PIMPINAN PUSAT
             </Typography>
@@ -130,15 +135,13 @@ function Card(props) {
               marginLeft: '40px'
             }}
           >
-            <Image
-              src={Avatar}
-              alt='user-image'
-              margin={0}
-              style={{
-                objectFit: 'contain',
-                width: '120px',
-                height: '130px'
+            <Box
+              component='img'
+              sx={{
+                height: 130,
+                width: 110
               }}
+              src={`${configs.BASE_URL}${dataUser.avatar}`}
             />
           </Grid>
           <Grid

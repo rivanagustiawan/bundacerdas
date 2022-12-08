@@ -16,10 +16,12 @@ import AlertTitle from '@mui/material/AlertTitle'
 import TableRow from '@mui/material/TableRow'
 import { styled, useTheme } from '@mui/material/styles'
 import TableCell from '@mui/material/TableCell'
+import CustomChip from 'src/@core/components/mui/chip'
+import CustomAvatar from 'src/@core/components/mui/avatar'
 import TableBody from '@mui/material/TableBody'
 import CardHeader from '@mui/material/CardHeader'
 import TableContainer from '@mui/material/TableContainer'
-
+import moment from 'moment'
 import authConfig from 'src/configs/auth'
 import configs from 'src/configs/configs'
 import { display } from '@mui/system'
@@ -30,7 +32,10 @@ const MUITableCell = styled(TableCell)(({ theme }) => ({
 }))
 
 function View({ id }) {
+  const [file, setFile] = useState()
   const [dataUser, setDataUser] = useState([])
+  const [data, setData] = useState()
+  const [alert, setAlert] = useState()
 
   async function getData() {
     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
@@ -44,11 +49,34 @@ function View({ id }) {
         }
       })
       setDataUser(response.data.user)
-
-      // console.log(response)
     } catch (error) {
       console.log(error)
     }
+  }
+
+  async function postData() {
+    const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `${configs.API_URL}/profile/change-avatar`,
+        data: data,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${storedToken}`
+        }
+      })
+      setAlert(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  function handleChangeFile(e) {
+    setFile(URL.createObjectURL(e.target.files[0]))
+    const newData = { ...data }
+    newData['avatar'] = e.target.files[0]
+    setData(newData)
   }
 
   useEffect(() => {
@@ -56,18 +84,34 @@ function View({ id }) {
   }, [])
 
   return (
-    <Grid container spacing={1} display='flex'>
+    <Grid container spacing={4} display='flex'>
       <Grid item md={5} xs={12}>
         <Grid item xs={12}>
           <Card>
-            <CardHeader title='Change Password' />
-            <CardContent>
-              <Alert icon={false} severity='warning' sx={{ mb: 6 }}>
-                <AlertTitle sx={{ fontWeight: 600, mb: theme => `${theme.spacing(1)} !important` }}>
-                  Ensure that these requirements are met
-                </AlertTitle>
-                Minimum 8 characters long, uppercase & symbol
-              </Alert>
+            <CardHeader title='Ganti Foto' />
+            <CardContent sx={{ pt: 15, display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+              <Divider />
+              {file ? (
+                <CustomAvatar
+                  src={file}
+                  variant='rounded'
+                  sx={{ width: 120, height: 120, fontWeight: 600, mb: 4, fontSize: '3rem' }}
+                />
+              ) : (
+                <CustomAvatar
+                  src={`${configs.BASE_URL}${dataUser.avatar}`}
+                  variant='rounded'
+                  sx={{ width: 120, height: 120, fontWeight: 600, mb: 4, fontSize: '3rem' }}
+                />
+              )}
+              {alert && <Alert onClose={() => setAlert(false)}>Ubah Foto Profile Berhasil !</Alert>}
+              <Button color='secondary' variant='contained' sx={{ mt: 4, width: 150 }} component='label'>
+                Upload File
+                <input type='file' id='avatar' onChange={handleChangeFile} hidden />
+              </Button>
+              <Button color='primary' variant='contained' sx={{ mt: 4, width: 150 }} onClick={() => postData()}>
+                Simpan
+              </Button>
             </CardContent>
           </Card>
         </Grid>
@@ -117,7 +161,7 @@ function View({ id }) {
                       <Typography variant='body2'>Tanggal Lahir</Typography>
                     </MUITableCell>
                     <MUITableCell>
-                      <Typography variant='inherit'>: {dataUser.tanggal_lahir}</Typography>
+                      <Typography variant='inherit'>: {moment(dataUser.tanggal_lahir).format('LL')}</Typography>
                     </MUITableCell>
                   </TableRow>
                   <TableRow>
@@ -224,9 +268,6 @@ function View({ id }) {
           <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button variant='contained' sx={{ mr: 2 }} href={`/profile/edit`}>
               Edit
-            </Button>
-            <Button color='error' variant='outlined'>
-              Kembali
             </Button>
           </CardActions>
         </Card>
