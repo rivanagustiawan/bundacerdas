@@ -33,6 +33,7 @@ const CardDonasi = ({ email }) => {
               hiddenLabel
               id='filled-hidden-label-small'
               defaultValue={email}
+              value={email}
               variant='filled'
               size='small'
               InputProps={{
